@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Troc</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 30px;
+            font-family: 'Arial', sans-serif;
+        }
+        h2 {
+            color: #007bff;
+            margin-top: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #343a40;
+            margin: 10px 0;
+        }
+        .separator {
+            margin: 20px 0;
+            border-top: 1px solid #ced4da;
+        }
+        .bad-files {
+            margin-top: 30px;
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+        .btn-custom {
+            margin: 5px;
+            font-size: 16px;
+        }
+        .table th {
+            background-color: #007bff;
+            color: white;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="mb-4 text-center">
+        <h1>Bienvenue sur le Troc</h1>
+        <p class="lead">Échangez facilement vos objets !</p>
+    </div>
+
+    <div class="mb-3">
+        <a href="/" class="btn btn-primary btn-custom">Retour à l'Accueil</a>
+        <a href="/create" class="btn btn-success btn-custom">Créer un Trocs</a>
+    </div>
+
+    {% for troc in trocs %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2>Informations générales du troc</h2>
+                <h3>Identifiant du troqueur : <span class="font-weight-bold">{{ troc.id_troqueur }}</span></h3>
+                <h3>Identifiant du destinataire : <span class="font-weight-bold">{{ troc.id_destinataire }}</span></h3>
+                <h3>Identifiant du fichier : <span class="font-weight-bold">{{ troc.id_fichier }}</span></h3>
+                <h3>Date du fichier : <span class="font-weight-bold">{{ troc.date_fichier }}</span></h3>
+
+                <h2>Messages</h2>
+                {% for message in troc.messages %}
+                    <h3>Date du message : <span class="font-weight-bold">{{ message.date_message }}</span></h3>
+                    <h3>Statut du message : <span class="font-weight-bold">{{ message.statut }}</span></h3>
+                    <h2>Objets à échanger du message</h2>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Qualité</th>
+                                <th scope="col">Quantité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for objet in message.objets %}
+                                <tr>
+                                    <td>{{ objet.titre }}</td>
+                                    <td>{{ objet.description }}</td>
+                                    <td>{{ objet.qualite }}</td>
+                                    <td>{{ objet.quantite }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="separator"></div>
+                {% endfor %}
+                <div class="separator"></div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <h2>Liste des fichiers pas bons</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="bad-files p-3 border border-danger rounded">
+                <h4 class="text-danger">Fichiers avec erreurs :</h4>
+                <ul class="list-group">
+                    {% for fichier in noms_des_fichiers_pas_bons %}
+                        <li class="list-group-item list-group-item-warning">
+                            {{ fichier }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

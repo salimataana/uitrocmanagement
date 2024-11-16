@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "properties": {
+    "id_troqueur": {
+      "type": "string",
+      "description": "Identifiant de l'expéditeur"
+    },
+    "id_destinataire": {
+      "type": "string",
+      "description": "Identifiant du destinataire "
+    },
+    "id_fichier": {
+      "type": "string",
+      "description": "Identifiant du fichier "
+    },
+    "date_fichier": {
+      "type": "string",
+      "description": "Date au format jj-mm-yyyy."
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "date_message": {
+            "type": "string",
+            "description": "Date au format jj-mm-yyyy."
+          },
+          "statut": {
+            "type": "string",
+            "enum": [
+              "accepte",
+              "valide",
+              "annule",
+              "refuse",
+              "propose"
+            ],
+            "description": "Statut de la proposition."
+          },
+          "objets": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "titre": {
+                  "type": "string",
+                  "description": "Titre de l'objet."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description de l'objet."
+                },
+                "qualite": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5,
+                  "description": "Qualité de l'objet entre 0 et 5."
+                },
+                "quantite": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Quantité de l'objet."
+                }
+              },
+              "required": ["titre", "description", "qualite", "quantite"]
+            }
+          }
+        },
+        "required": ["date_message", "statut", "objets"]
+      }
+    },
+    "checksum": {
+      "type": "string",
+      "description": "String permettant la gestion des erreurs de transfert de données."
+    }
+  },
+  "required": [
+    "id_troqueur",
+    "id_destinataire",
+    "id_fichier",
+    "date_fichier",
+    "messages",
+    "checksum"
+  ]
+}

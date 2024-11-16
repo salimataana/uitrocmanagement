@@ -1,0 +1,20 @@
+{
+  "id_troqueur": "g1.4",
+  "id_destinataire": "g1.4",
+  "id_fichier": "fichier",
+  "date_fichier": "12-08-2014",
+  "messages": [
+    {
+      "date_message": "12-08-2014",
+      "statut": "propose",
+      "objets": [
+        {
+          "titre": "moto",
+          "description": "une moto seconde main",
+          "qualite": 1,
+          "quantite": 1
+        }
+      ]
+    }
+  ]
+}

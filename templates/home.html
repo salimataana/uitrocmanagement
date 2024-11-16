@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding: 20px 0;
+        }
+        nav a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 160px); /* Ajuste la hauteur pour le header et le footer */
+            padding: 0;
+        }
+        img {
+            width: 100%; /* Prend toute la largeur disponible */
+            height: auto; /* Ajuste la hauteur proportionnellement */
+            max-height: 100%; /* Empêche le débordement vertical */
+            object-fit: contain; /* Conserve le ratio de l'image */
+        }
+        footer {
+            background: #35424a;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .btn-light {
+            background-color: #2980b9;
+            border-color: #2980b9;
+            color: white;
+        }
+        .btn-light:hover {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="text-center">
+        <h1>Bienvenue sur le site des trocs</h1>
+        <nav>
+            <a href="/" class="btn btn-success btn-custom">Accueil</a>
+            <a href="/index" class="btn btn-light">Listes des Trocs</a>
+            <a href="/create" class="btn btn-success btn-custom">Création de Trocs</a>
+        </nav>
+    </header>
+
+    <div class="content">
+        <img src="{{ url_for('static', filename='images_trocs/img_2.png') }}" alt="Description de l'image">
+    </div>
+
+    <footer>
+        <p>&copy; 2024 JSON</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

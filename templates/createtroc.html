@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Création Troc</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        nav a {
+            color: #ffffff;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .objet {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .objet .form-group label {
+            font-weight: 600;
+        }
+        .btn {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .btn-outline-dark {
+            color: #343a40;
+            border-color: #343a40;
+        }
+        .btn-outline-dark:hover {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .mt-4 {
+            margin-top: 30px !important;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header class="text-center">
+    <h1>Créer un Troc</h1>
+    <nav class="nav justify-content-center">
+        <a href="/" class="btn btn-primary btn-custom">Retour à l'Accueil</a>
+        <a href="/index" class="btn btn-success btn-custom">Liste des Trocs</a>
+    </nav>
+</header>
+
+<div class="container mt-4">
+    <div class="form-container">
+        <form action="/create" method="post">
+            <!-- Form fields for troc -->
+            <div class="form-group">
+                <label for="id_troqueur">Troqueur ID :</label>
+                <input type="text" id="id_troqueur" name="id_troqueur" class="form-control" required placeholder="Entrer l'identifiant du troqueur">
+            </div>
+
+            <div class="form-group">
+                <label for="id_destinataire">Destinataire ID :</label>
+                <input type="text" id="id_destinataire" name="id_destinataire" class="form-control" required placeholder="Entrer l'identifiant du destinataire">
+            </div>
+
+            <div class="form-group">
+                <label for="id_fichier">Fichier ID :</label>
+                <input type="text" id="id_fichier" name="id_fichier" class="form-control" required placeholder="Entrer l'identifiant du fichier">
+            </div>
+
+            <div class="form-group">
+                <label for="date_fichier">Date du fichier :</label>
+                <input type="text" id="date_fichier" name="date_fichier" class="form-control" required placeholder="Entrer la date du fichier (jj-mm-aaaa)">
+            </div>
+
+            <!-- Section for message -->
+            <h2>Messages</h2>
+            <div class="form-group">
+                <label for="date_message">Date du message :</label>
+                <input type="text" id="date_message" name="date_message" class="form-control" required placeholder="Entrer la date du message (jj-mm-aaaa)">
+            </div>
+
+            <div class="form-group">
+                <label for="statut">Statut du message :</label>
+                <select id="statut" name="statut" class="form-control" required>
+                    <option value="propose">Proposé</option>
+                    <!-- Option placeholders for other statuses -->
+                </select>
+            </div>
+
+            <h3>Objets à échanger</h3>
+
+            <div id="objets">
+                <div class="objet">
+                    <div class="form-group">
+                        <label for="titre">Titre de l'objet :</label>
+                        <input type="text" name="titre" class="form-control" required placeholder="Entrer le titre de l'objet">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description de l'objet :</label>
+                        <input type="text" name="description" class="form-control" required placeholder="Entrer la description de l'objet">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="qualite">Qualité de l'objet (0-5) :</label>
+                        <input type="number" name="qualite" min="0" max="5" class="form-control" required placeholder="Entrer la qualité de l'objet">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantite">Quantité :</label>
+                        <input type="number" name="quantite" min="1" class="form-control" required placeholder="Entrer la quantité">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="ajouterObjet()">Ajouter un objet</button><br><br>
+
+            <input type="submit" value="Générer Troc" class="btn btn-success">
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 - Création de Troc | Tous droits réservés</p>
+</footer>
+
+<script>
+    function ajouterObjet() {
+        const objetsDiv = document.getElementById('objets');
+        const newObjetDiv = document.createElement('div');
+        newObjetDiv.classList.add('objet');
+
+        newObjetDiv.innerHTML = `
+            <div class="form-group">
+                <label for="titre">Titre de l'objet :</label>
+                <input type="text" name="titre" class="form-control" required placeholder="Entrer le titre de l'objet">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description de l'objet :</label>
+                <input type="text" name="description" class="form-control" required placeholder="Entrer la description de l'objet">
+            </div>
+
+            <div class="form-group">
+                <label for="qualite">Qualité de l'objet (0-5) :</label>
+                <input type="number" name="qualite" min="0" max="5" class="form-control" required placeholder="Entrer la qualité de l'objet">
+            </div>
+
+            <div class="form-group">
+                <label for="quantite">Quantité :</label>
+                <input type="number" name="quantite" min="1" class="form-control" required placeholder="Entrer la quantité">
+            </div>
+        `;
+        objetsDiv.appendChild(newObjetDiv);
+    }
+</script>
+
+</body>
+</html>
