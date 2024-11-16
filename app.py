@@ -7,6 +7,10 @@ from pyexpat.errors import messages
 
 from data_access import get_all_trocs
 
+
+PREFIX_FOLDER_TROC_SENT="data/troc_sent"
+PREFIX_FOLDER_TROC_RECEIVED="data/troc_received"
+
 app = Flask(__name__)
 @app.route("/")
 def home():
@@ -14,7 +18,7 @@ def home():
 
 @app.route("/index")
 def index():
-    trocs,noms_des_fichiers_pas_bons=get_all_trocs()
+    trocs,noms_des_fichiers_pas_bons=get_all_trocs(PREFIX_FOLDER_TROC_RECEIVED)
     return render_template("indextroc.html",trocs=trocs,noms_des_fichiers_pas_bons=noms_des_fichiers_pas_bons)
 
 @app.route("/create",methods=("GET", "POST"))
@@ -75,6 +79,6 @@ def create():
 
         ts=time.time()
         string_date=datetime.datetime.fromtimestamp(ts).strftime('%Y_%m_%d_%H_%M_%S')
-        with open(f'data/example_{string_date}.json', 'w') as fp:
+        with open(f'{PREFIX_FOLDER_TROC_SENT}/example_{string_date}.json', 'w') as fp:
             json.dump(my_json, fp)
         return redirect(url_for('index'))

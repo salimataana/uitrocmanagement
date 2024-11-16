@@ -1,0 +1,21 @@
+{
+  "id_troqueur": "g1.1",
+  "id_destinataire": "g1.4",
+  "id_fichier": "g3.1",
+  "date_fichier": "12-08-2014",
+  "messages": [
+    {
+      "date_message": "22-10-2024",
+      "statut": "propose",
+      "objets": [
+        {
+          "titre": "chaise",
+          "description": "chaise d'ocasion",
+          "qualite": 0,
+          "quantite": 1
+        }
+      ]
+    }
+  ],
+  "checksum": "toto"
+}

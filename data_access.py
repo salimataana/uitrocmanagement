@@ -1,6 +1,5 @@
 import json
 import os
-from logging import exception
 from jsonschema import validate
 from models.troc import Troc
 DATA_FOLDER="data"
@@ -16,16 +15,22 @@ def validate_json(file_path, validation_schema):
         print("Le json n'est pas valide")
         return False
 
-def get_all_trocs():
-    path="data/example.json"
+def get_all_trocs(folder_path):
     noms_fichers_pas_bons=[]
     trocs=[]
-    for file in os.listdir(DATA_FOLDER):
+    for file in os.listdir(folder_path):
         # check the files which are end with specific extension
         if file.endswith(".json"):
             # print path name of selected files
             try:
-                trocs.append(get_troc(os.path.join(DATA_FOLDER, file)))
+                #retenir quelque part le nom du fichier
+                trocs.append(get_troc(os.path.join(folder_path, file)))
+                trocs.append(
+                                        {
+                                            "file_name":file,
+                                            "troc":get_troc(os.path.join(folder_path, file))
+                                        }
+                )
             except Exception as e:
                 noms_fichers_pas_bons.append(file),
                 print(f"erreur dans le fichier {e}")
