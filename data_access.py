@@ -36,7 +36,7 @@ def get_troc(path):
     :param path: on verifie d'abord si le fichier est un bon json avant de le charger dans troc
     :return:
     """
-    is_valid = validate_json(path, "schema/schema.json")
+    is_valid = validate_json(path, "schema/schema_troc.json")
     file = open(path,encoding="utf-8")
     json_data = json.load(file)
     troc = Troc.from_json(json_data)
