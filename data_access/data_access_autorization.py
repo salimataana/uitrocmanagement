@@ -12,13 +12,14 @@ def get_autorization_by_id_fichier(id_fichier) -> Autorisation:
         :param path: on verifie d'abord si le fichier est un bon json avant de le charger dans troc
         :return:
         """
-    is_valid = validate_json(id_fichier, "schema/schema_autorisation.json")
+    #is_valid = validate_json(id_fichier, "schema/schema_autorisation.json")
     file = open(id_fichier, encoding="utf-8")
     json_data = json.load(file)
     return Autorisation.from_json(json_data)
 
 
 def get_all_autorizations(folder_path=DATA_FOLDER_AUTORIZATION):
+    print(os.listdir(folder_path))
     autorizations = []
     for file in os.listdir(folder_path):
         # check the files which are end with specific extension

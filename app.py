@@ -2,9 +2,7 @@
 import datetime
 import time
 from random import randint
-
 from flask import Flask, render_template, request, url_for, flash, redirect
-
 from data_access import USER_CURRENT
 from data_access.data_access_autorization import get_all_autorizations, DATA_FOLDER_AUTORIZATION
 from data_access.data_access_troc import get_all_trocs, get_troc_by_id_fichier
@@ -37,10 +35,11 @@ def index_troc_received():
     print(f"********************************{len(trocs)}*****************")
     return render_template("indextrocreceived.html",trocs=trocs,noms_des_fichiers_pas_bons=noms_des_fichiers_pas_bons)
 
-@app.route("/autorisationsent")
-def index_autorisation_sent():
-    autorization=get_all_autorizations(folder_path=DATA_FOLDER_AUTORIZATION)
-    return render_template("indexautorisation.html",autorization=autorization)
+@app.route("/autorisation")
+def index_autorisation():
+    autorizations=get_all_autorizations(folder_path=DATA_FOLDER_AUTORIZATION)
+    print(autorizations)
+    return render_template("indexautorisation.html",autorizations=autorizations)
 
 
 @app.route("/create",methods=("GET", "POST"))
@@ -89,7 +88,7 @@ def create_demande_autorisation(id_message, id_fichier):
         file_name = generate_unique_name_file_for_authorization()
 
         autorisation.save(f"{PREFIX_FOLDER_AUTH}/{file_name}")
-        return redirect(url_for('index_troc_received'))
+        return redirect(url_for('index_autorisation'))
 
 
 def generate_unique_name_file_troc():

@@ -35,7 +35,7 @@ class Autorisation:
             "id_destinataire": self.id_destinataire,
             "id_fichier": self.id_fichier,
             "date_fichier": self.date_fichier,
-            "demandes_autorisation": self.demande_autorisation.to_json(),
+            "demande_autorisation": self.demande_autorisation.to_json(),
             "checksum": self.checksum
         }
 

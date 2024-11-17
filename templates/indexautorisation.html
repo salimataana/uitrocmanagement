@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Troc</title>
+    <link rel="stylesheet" type="text/css" href="./static/css/indextroc.css" />
 </head>
 <body>
+<h1>Liste Autorisation</h1>
+    <nav>
+        <a href="/" class="button">Retour à l'Accueil</a>
+        <a href="/create" class="button">Créer un Trocs</a>
+    </nav>
+
+    <div class="autorization">
+        {% for autorization in autorizations %}
+        <div class="autorization">
+            <h2>Les informations générales de l'autorisation</h2>
+            <h3>Identifiant du troqueur : {{ autorization.id_troqueur }}</h3>
+            <h3>Identifiant du destinataire : {{ autorization.id_destinataire }}</h3>
+            <h3>Identifiant du fichier : {{ autorization.id_fichier }}</h3>
+            <h3>Date du fichier : {{ autorization.date_fichier }}</h3>
+            <h3>Demande d'Autorisation Statut: {{ autorization.demande_autorisation.statut_autorisation }}</h3>
+            <h3>Demande d'Autorisation Date: {{ autorization.demande_autorisation.date }}</h3>
+            <h3>Identifiant du Message: {{ autorization.demande_autorisation.id_message }}</h3>
+            <h3>mail: {{ autorization.demande_autorisation.coord.mail }}</h3>
+            <h3> telephone: {{ autorization.demande_autorisation.telephone }}</h3>
+        </div>
+        {% endfor %}
+      </div>
+
+    <script src="./static/js/indextroc.js" defer></script>
 
 </body>
 </html>
