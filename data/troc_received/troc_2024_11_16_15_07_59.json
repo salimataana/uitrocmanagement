@@ -1,0 +1,21 @@
+{
+  "id_troqueur": "g1.3",
+  "id_destinataire": "g2.3",
+  "id_fichier": "data/troc_received/troc_2024_11_16_15_07_59.json",
+  "date_fichier": "13-06-2024",
+  "messages": [
+    {
+      "date_message": "22-10-2024",
+      "statut": "propose",
+      "objets": [
+        {
+          "titre": "table",
+          "description": "table d'occasion",
+          "qualite": 2,
+          "quantite": 1
+        }
+      ]
+    }
+  ],
+  "checksum": "5cf67e57544323721d90d79700193c46"
+}
