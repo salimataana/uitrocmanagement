@@ -25,12 +25,6 @@ def get_all_trocs(folder_path):
             try:
                 #retenir quelque part le nom du fichier
                 trocs.append(get_troc(os.path.join(folder_path, file)))
-                trocs.append(
-                                        {
-                                            "file_name":file,
-                                            "troc":get_troc(os.path.join(folder_path, file))
-                                        }
-                )
             except Exception as e:
                 noms_fichers_pas_bons.append(file),
                 print(f"erreur dans le fichier {e}")
@@ -48,4 +42,11 @@ def get_troc(path):
     troc = Troc.from_json(json_data)
     return troc
 
-"""print(get_all_trocs())"""
+
+def update_message_status(status, message, file_name):
+    troc = get_troc(file_name)
+    for msg in troc.messages:
+        if msg.date_message == message.date_message:
+            msg.statut = status
+
+    pass

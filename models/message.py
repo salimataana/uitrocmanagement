@@ -1,6 +1,5 @@
 import re
 from typing import List
-
 from models.objetechanger import ObjetExchange
 
 
@@ -12,3 +11,17 @@ class Message:
 
     def __repr__(self):
         return f"Message(date_message={self.date_message}, statut={self.statut}, objets={self.objets})"
+
+    def __str__(self):
+        return f"Message(date_message={self.date_message}, statut={self.statut}, objets={self.objets})"
+
+    def to_json(self):
+        """
+        :return: this function return the object message in json format
+        """
+        data = {
+            "date_message": self.date_message,
+            "statut": self.statut,
+            "objets": [objet.to_json() for objet in self.objets]
+        }
+        return data

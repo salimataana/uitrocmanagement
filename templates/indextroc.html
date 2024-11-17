@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="./static/css/indextroc.css" />
 </head>
 <body>
-<h1>Les trocs recus</h1>
+<h1>Les trocs envoyes</h1>
     <nav>
         <a href="/" class="button">Retour à l'Accueil</a>
         <a href="/create" class="button">Créer un Trocs</a>
@@ -17,13 +17,13 @@
         {% for troc in trocs | sort(attribute='date_fichier', reverse=True) %}
         <div class="troc">
             <h2>Les informations générales du troc</h2>
-            <h3>Identifiant du troqueur : {{ troc['troc'].id_troqueur }}</h3>
-            <h3>Identifiant du destinataire : {{ troc['troc'].id_destinataire }}</h3>
-            <h3>Identifiant du fichier : {{ troc['troc'].id_fichier }}</h3>
-            <h3>Date du fichier : {{ troc['troc'].date_fichier }}</h3>
+            <h3>Identifiant du troqueur : {{ troc.id_troqueur }}</h3>
+            <h3>Identifiant du destinataire : {{ troc.id_destinataire }}</h3>
+            <h3>Identifiant du fichier : {{ troc.id_fichier }}</h3>
+            <h3>Date du fichier : {{ troc.date_fichier }}</h3>
 
             <h2>Les messages</h2>
-            {% for message in troc['troc'].messages | sort(attribute='date_message', reverse=True) %}
+            {% for message in troc.messages | sort(attribute='date_message', reverse=True) %}
             <div class="message">
                 <h3>Date du message : {{ message.date_message }}</h3>
                 <h3>Statut du message : {{ message.statut }}</h3>

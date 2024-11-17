@@ -11,3 +11,14 @@ class ObjetExchange:
         return f"Objet(titre={self.titre}, description={self.description}, qualite={self.qualite}, quantite={self.quantite})"
 
 
+    def to_json(self):
+        """
+        :return: this function return the object objet in json format
+        """
+        data = {
+            "titre": self.titre,
+            "description": self.description,
+            "qualite": self.qualite,
+            "quantite": self.quantite
+        }
+        return data
