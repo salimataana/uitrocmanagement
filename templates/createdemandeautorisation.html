@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Création Demande d'autorisation</title>
+    <link rel="stylesheet" type="text/css" href="./static/css/createtroc.css" />
+
+</head>
+<body>
+
+<a href="/" class="button">Retour à l'Accueil</a>
+<a href="/index" class="button">Listes des Trocs</a>
+
+    <h1>Créer un demande d'autorisation</h1>
+    <form action="/createdemandeautorisation/id_message={{id_message}}&id_fichier={{id_fichier}}" method="post">
+
+        <label for="statut_autorisation">Statut du autorisation:</label>
+        <select id="statut_autorisation" name="statut_autorisation" required>
+            <option value="accepte">accepte</option>
+            <option value="valide">valide</option>
+            <option value="annule">annule</option>
+            <option value="refuse">refuse</option>
+        </select>
+
+
+        <label for="mail">Mail :</label>
+        <input type="text" id="mail" name="mail" required placeholder="Veillez entrer votre mail">
+
+           <label for="telephone">Telephone ID:</label>
+        <input type="text" id="telephone" name="telephone" required placeholder="Veillez entrer votre telephone">
+
+
+        <input type="submit" value="Soumettre la demande d'autorisation ">
+    </form>
+
+
+</body>
+</html>

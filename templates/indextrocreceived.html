@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="./static/css/indextroc.css" />
 </head>
 <body>
-<h1>Les trocs envoyes</h1>
+<h1>Les trocs recus</h1>
     <nav>
         <a href="/" class="button">Retour à l'Accueil</a>
         <a href="/create" class="button">Créer un Trocs</a>
@@ -25,6 +25,7 @@
             <h2>Les messages</h2>
             {% for message in troc.messages | sort(attribute='date_message', reverse=True) %}
             <div class="message">
+                <h3>Identifiant du message : {{ message.id_message }}</h3>
                 <h3>Date du message : {{ message.date_message }}</h3>
                 <h3>Statut du message : {{ message.statut }}</h3>
                 <h2>Les objets à échanger du message</h2>
@@ -49,8 +50,10 @@
                     </tbody>
                 </table>
                 <p>Acceptez-vous ce troc ?</p>
-                <button onclick="acceptTrade(this.parentElement)">Accepter</button>
-                <button onclick="declineTrade(this.parentElement)">Refuser</button>
+                <!--<button onclick="acceptTrade(this.parentElement)">Accepter</button> -->
+                <!--<button onclick="declineTrade(this.parentElement)">Refuser</button> -->
+                <a href="/createdemandeautorisation/id_message={{ message.id_message }}&id_fichier={{ troc.id_fichier }}"><button>Creer une demande d'autorisation</button></a>
+
             </div>
             {% endfor %}
         </div>

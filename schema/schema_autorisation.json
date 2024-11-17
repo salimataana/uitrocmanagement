@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "autorisation": {
+      "type": "object",
+      "properties": {
+        "idTroqueur": {
+          "type": "string",
+          "description": "Identifiant de l'expéditeur."
+        },
+        "idDestinataire": {
+          "type": "string",
+          "description": "Identifiant du destinataire."
+        },
+        "idFichier": {
+          "type": "string",
+          "description": "Identifiant du fichier."
+        },
+        "dateFichier": {
+          "type": "string",
+          "description": "Date au format jj-mm-yyyy."
+        },
+        "checksum": {
+          "type": "string",
+          "description": "String permettant la gestion des erreurs de transfert de données."
+        },
+        "MessageDemandeAutorisation": {
+          "type": "object",
+          "properties": {
+            "coordonnees": {
+              "type": "object",
+              "properties": {
+                "mail": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "Adresse e-mail de contact."
+                },
+                "telephone": {
+                  "type": "string",
+                  "description": "Numéro de téléphone."
+                }
+              },
+              "required": ["mail", "telephone"]
+            },
+            "statutAutorisation": {
+              "type": "string",
+              "enum": ["accepte", "refuse"],
+              "description": "Statut de la demande d'autorisation."
+            },
+            "destinataire": {
+              "type": "string",
+              "description": "Identifiant du destinataire de la demande."
+            },
+            "date": {
+              "type": "string",
+              "description": "Date de la demande d'autorisation."
+            },
+            "idMessage": {
+              "type": "string",
+              "description": "Identifiant du message."
+            }
+          },
+          "required": ["coordonnees", "statutAutorisation", "destinataire", "date", "idMessage"]
+        }
+      },
+      "required": ["idTroqueur", "idDestinataire", "idFichier", "dateFichier", "checksum", "MessageDemandeAutorisation"]
+    }
+  },
+  "required": ["autorisation"]
+}

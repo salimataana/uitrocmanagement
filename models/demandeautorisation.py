@@ -4,7 +4,7 @@ from models.coordonnees import Coordonnees
 
 
 class DemandeAutorisation:
-    def __init__(self, statut_autorisation: str, date: str, id_message: str, coord:Coordonnees):
+    def __init__(self, statut_autorisation: str, date: str, id_message: str, coord: Coordonnees):
         self.statut_autorisation = statut_autorisation
         self.date = date
         self.id_message = id_message

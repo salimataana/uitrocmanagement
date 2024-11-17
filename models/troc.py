@@ -42,7 +42,7 @@ class Troc:
             "checksum": self.checksum
         }
 
-    def save(self):
-        with open(self.id_fichier, 'w') as fp:
+    def save(self, path):
+        with open(path, 'w') as fp:
             json.dump(self.to_json(), fp)
 
