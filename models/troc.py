@@ -10,7 +10,7 @@ class Troc:
                                  messages: List[Message],
                                  checksum: str=None):
         self.id_troqueur = id_troqueur
-        self.id_destinataire = id_destinataire
+        self.id_destinataire = "" if id_destinataire is None else id_destinataire
         self.id_fichier = id_fichier
         self.date_fichier = date_fichier
         self.messages = messages

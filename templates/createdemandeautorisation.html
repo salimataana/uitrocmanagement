@@ -16,10 +16,38 @@
 <header class="bg-primary text-white text-center py-4">
     <h1>Bienvenue sur le site des trocs</h1>
     <nav>
-        <a href="#" class="btn btn-light mx-2">Accueil</a>
-        <a href="/trocreceived" class="btn btn-light mx-2">Listes des Trocs reçus</a>
-        <a href="/trocsent" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
-        <a href="/create" class="btn btn-light mx-2">Création de Trocs</a>
+
+
+        <a href="{{ url_for('main.home') }}" class="btn btn-light mx-2">Home</a>
+
+        {% if current_user.is_authenticated %}
+
+        <a href="{{ url_for('main.index_troc_received') }}" class="btn btn-light mx-2">Listes des Trocs reçus</a>
+
+
+        <a href="{{ url_for('main.index_troc_sent') }}" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+
+
+        <a href="{{ url_for('main.create_troc') }}" class="btn btn-light mx-2">Création de Trocs</a>
+
+
+        <a href="{{ url_for('main.index_autorisation') }}" class="btn btn-light mx-2">Listes des Demandes
+            d'autorisation</a>
+
+
+
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+
+        <a href="{{ url_for('auth.login') }}" class="btn btn-light mx-2">Login</a>
+
+
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-light mx-2">Sign Up</a>
+
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-light mx-2">Logout</a>
+        {% endif %}
     </nav>
 </header>
 
@@ -50,7 +78,7 @@
                 <!-- Champ Mail -->
                 <div class="form-group">
                     <label for="mail">Mail :</label>
-                    <input type="email" id="mail" name="mail" class="form-control" required placeholder="Veuillez entrer votre mail">
+                    <input type="email" id="mail" name="mail" class="form-control" required placeholder="" value="{{ email }}" readonly>
                 </div>
 
                 <!-- Champ Téléphone -->

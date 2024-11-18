@@ -17,21 +17,43 @@
 <header class="bg-primary text-white text-center py-4">
     <h1>Bienvenue sur le site des trocs</h1>
     <nav>
-        <a href="#" class="btn btn-light mx-2">Accueil</a>
-        <a href="/trocreceived" class="btn btn-light mx-2">Listes des Trocs reçus</a>
-        <a href="/trocsent" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
-        <a href="/create" class="btn btn-light mx-2">Création de Trocs</a>
-        <a href="/autorisation" class="btn btn-light mx-2">Listes des Demandes d'autorisation</a>
-        <a href="{{url_for('login')}}" class="btn btn-light mx-2">Connexion</a><br>
-        <a href="{{url_for('register')}}" class="btn btn-light mx-2">Inscription</a><br>
+
+
+        <a href="{{ url_for('main.home') }}" class="btn btn-light mx-2">Home</a>
+
+        {% if current_user.is_authenticated %}
+
+        <a href="{{ url_for('main.index_troc_received') }}" class="btn btn-light mx-2">Listes des Trocs reçus</a>
+
+
+        <a href="{{ url_for('main.index_troc_sent') }}" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+
+
+        <a href="{{ url_for('main.create_troc') }}" class="btn btn-light mx-2">Création de Trocs</a>
+
+
+        <a href="{{ url_for('main.index_autorisation') }}" class="btn btn-light mx-2">Listes des Demandes
+            d'autorisation</a>
+
+
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+
+        <a href="{{ url_for('auth.login') }}" class="btn btn-light mx-2">Login</a>
+
+
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-light mx-2">Sign Up</a>
+
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-light mx-2">Logout</a>
+        {% endif %}
     </nav>
 </header>
 
-<!-- Contenu de la page -->
 <div class="container text-center my-5">
-    <img src="{{url_for('static', filename='images_trocs/home.png')}}" alt="Image principale" class="img-fluid mb-4" />
+    <img src="{{url_for('static', filename='images_trocs/home.png')}}" alt="Image principale" class="img-fluid mb-4"/>
 </div>
-
 <!-- Pied de page -->
 <footer class="bg-dark text-white text-center py-3">
     <p>&copy; 2024 JSON. Tous droits réservés.</p>

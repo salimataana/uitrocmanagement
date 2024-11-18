@@ -10,17 +10,45 @@
 
     <!-- Lien vers votre fichier CSS personnalisé -->
     <link rel="stylesheet" type="text/css" href="./static/css/indextroc.css" />
+    <link rel="stylesheet" type="text/css" href="./static/css/menu.css" />
 </head>
 <body>
 
-<!-- Header -->
 <header class="bg-primary text-white text-center py-4">
     <h1>Bienvenue sur le site des trocs</h1>
     <nav>
-        <a href="#" class="btn btn-light mx-2">Accueil</a>
-        <a href="/trocsent" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
-        <a href="/create" class="btn btn-light mx-2">Création de Trocs</a>
-        <a href="/autorisation" class="btn btn-light mx-2">Listes des Demandes d'autorisation</a>
+
+
+        <a href="{{ url_for('main.home') }}" class="btn btn-light mx-2">Home</a>
+
+        {% if current_user.is_authenticated %}
+
+        <a href="{{ url_for('main.index_troc_received') }}" class="btn btn-light mx-2">Listes des Trocs reçus</a>
+
+
+        <a href="{{ url_for('main.index_troc_sent') }}" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+
+
+        <a href="{{ url_for('main.create_troc') }}" class="btn btn-light mx-2">Création de Trocs</a>
+
+
+        <a href="{{ url_for('main.index_autorisation') }}" class="btn btn-light mx-2">Listes des Demandes
+            d'autorisation</a>
+
+
+
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+
+        <a href="{{ url_for('auth.login') }}" class="btn btn-light mx-2">Login</a>
+
+
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-light mx-2">Sign Up</a>
+
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-light mx-2">Logout</a>
+        {% endif %}
     </nav>
 </header>
 
@@ -30,19 +58,19 @@
         <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
     </div>
 
-    <h1 class="text-center mb-4">Les trocs reçus</h1>
+    <h1 class="text-center mb-4">Les trocs envoyés</h1>
 
     <!-- Liste des trocs -->
     <div class="trocs">
         {% for troc in trocs | sort(attribute='date_fichier', reverse=True) %}
         <div class="troc mb-4 p-4 border rounded shadow-sm">
-            <h2 class="text-primary">Informations générales du Troc</h2>
+            <h2 class="text-primary">Informations générales du troc</h2>
             <p><strong>Identifiant du troqueur :</strong> {{ troc.id_troqueur }}</p>
             <p><strong>Identifiant du destinataire :</strong> {{ troc.id_destinataire }}</p>
             <p><strong>Identifiant du fichier :</strong> {{ troc.id_fichier }}</p>
             <p><strong>Date du fichier :</strong> {{ troc.date_fichier }}</p>
 
-            <h3 class="text-primary">Messages</h3>
+            <h3 class="text-primary">Les messages</h3>
             {% for message in troc.messages | sort(attribute='date_message', reverse=True) %}
             <div class="message mb-4 p-3 border rounded">
                 <h4>Identifiant du message : {{ message.id_message }}</h4>
@@ -70,20 +98,18 @@
                         {% endfor %}
                     </tbody>
                 </table>
-
-                <!-- Boutons d'actions -->
-                <p>Acceptez-vous ce troc ?</p>
+            </div>
+               <p>Acceptez-vous ce troc ?</p>
                 <a href="/createdemandeautorisation/id_message={{ message.id_message }}&id_fichier={{ troc.id_fichier }}">
                     <button class="btn btn-primary">Créer une demande d'autorisation</button>
                 </a>
-            </div>
             {% endfor %}
         </div>
         {% endfor %}
     </div>
 
-    <!-- Liste des fichiers pas bons -->
-    <h2 class="text-danger">La liste des fichiers pas bons</h2>
+    <!-- Liste des fichiers incorrects -->
+    <h2 class="text-danger mt-5">La liste des fichiers incorrects</h2>
     <div class="bad-files p-3 border rounded bg-light mb-5">
         <pre>{{ noms_des_fichiers_pas_bons }}</pre>
     </div>

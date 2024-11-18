@@ -1,6 +1,8 @@
 import json
 import os
 
+from flask_login import current_user
+
 from data_access.validation_helper import validate_json
 from models.troc import Troc
 
@@ -35,13 +37,28 @@ def get_all_trocs_malformated(folder_path):
         if file.endswith(".json"):
             try:
                 print("File well formated")
+                get_troc_by_id_fichier(file)
             except Exception as e:
-                trocs_malformated.append(file),
+                trocs_malformated.append(os.path.join(folder_path, file)),
                 print(f"erreur dans le fichier {e}")
     return trocs_malformated
 
 def get_all_trocs(folder_path):
     malformatted_files =  get_all_trocs_malformated(folder_path)
     well_formated_files = get_all_trocs_well_formatted(folder_path)
+    print(malformatted_files)
     return well_formated_files, malformatted_files
 
+
+def get_all_trocs_sent_by_current_user(folder_path, id_troqueur):
+    malformatted_files =  get_all_trocs_malformated(folder_path)
+    well_formated_files = get_all_trocs_well_formatted(folder_path)
+    well_formated_files=[item for item in well_formated_files if str(item.id_troqueur)==str(id_troqueur) ]
+    return  well_formated_files, malformatted_files
+
+
+def get_all_trocs_received_by_current_user(folder_path, id_troqueur):
+    malformatted_files =  get_all_trocs_malformated(folder_path)
+    well_formated_files = get_all_trocs_well_formatted(folder_path)
+    print(malformatted_files)
+    return [item for item in well_formated_files if str(item.id_troqueur)!=str(id_troqueur) ], malformatted_files
