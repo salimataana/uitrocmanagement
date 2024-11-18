@@ -1,0 +1,77 @@
+/* Style global du body */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* En-tête */
+header {
+    background-color: #35424a;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+nav a {
+    color: #ffffff;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #1e2a31;
+}
+
+/* Contenu de la page */
+.container {
+    max-width: 1100px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Pied de page */
+footer {
+    background-color: #2d3e50;
+    color: white;
+    font-size: 0.9rem;
+}
+
+/* Ajout de l'effet de survol sur les liens */
+footer p {
+    margin: 0;
+    padding: 10px 0;
+}
+
+/* Ajout de quelques marges pour une meilleure présentation */
+.my-5 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    nav a {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

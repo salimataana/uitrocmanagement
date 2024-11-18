@@ -2,80 +2,143 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création Troc</title>
-    <link rel="stylesheet" type="text/css" href="./static/css/createtroc.css" />
 
+    <!-- Lien vers le CDN de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Lien vers votre fichier CSS personnalisé -->
+    <link rel="stylesheet" type="text/css" href="./static/css/createtroc.css" />
+    <link rel="stylesheet" type="text/css" href="./static/css/menu.css" />
 </head>
 <body>
 
-<a href="/" class="button">Retour à l'Accueil</a>
-<a href="/index" class="button">Listes des Trocs</a>
+<!-- Header -->
+<header class="bg-primary text-white text-center py-4">
+    <h1>Bienvenue sur le site des trocs</h1>
+    <nav>
+        <a href="#" class="btn btn-light mx-2">Accueil</a>
+        <a href="/trocreceived" class="btn btn-light mx-2">Listes des Trocs reçus</a>
+        <a href="/trocsent" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+        <a href="/autorisation" class="btn btn-light mx-2">Listes des Demandes d'autorisation</a>
+    </nav>
+</header>
 
-    <h1>Créer un Troc</h1>
-    <form action="/create" method="post">
-        <label for="id_troqueur">Troqueur ID:</label>
-        <input type="text" id="id_troqueur" name="id_troqueur" required placeholder="Entrer l'identifiant du troqueur">
-
-        <label for="id_destinataire">Destinataire ID:</label>
-        <input type="text" id="id_destinataire" name="id_destinataire" required placeholder="Entrer l'identifiant du destinataire">
-
-        <label for="date_fichier">Date du fichier:</label>
-        <input type="text" id="date_fichier" name="date_fichier" required placeholder="Entrer la date du fichier (jj-mm-aaaa)">
-
-        <h2>Messages</h2>
-
-        <label for="date_message">Date du message:</label>
-        <input type="text" id="date_message" name="date_message" required placeholder="Entrer la date du message (jj-mm-aaaa)">
-
-        <label for="statut">Statut du message:</label>
-        <select id="statut" name="statut" required>
-            <option value="propose">Proposé</option>
-        </select>
-
-        <h3>Objets à échanger</h3>
-
-        <div id="objets">
-            <div class="objet">
-                <label for="titre">Titre de l'objet:</label>
-                <input type="text" name="titre" required placeholder="Entrer le titre de l'objet">
-
-                <label for="description">Description de l'objet:</label>
-                <input type="text" name="description" required placeholder="Entrer la description de l'objet">
-
-                <label for="qualite">Qualité de l'objet (0-5):</label>
-                <input type="number" name="qualite" min="0" max="5" required placeholder="Entrer la qualité de l'objet">
-
-                <label for="quantite">Quantité:</label>
-                <input type="number" name="quantite" min="1" required placeholder="Entrer la quantité">
+<!-- Section de contenu principal -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Navigation -->
+            <div class="d-flex justify-content-between mb-4">
+                <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
             </div>
+
+            <!-- Formulaire de création de Troc -->
+            <h1 class="text-center mb-4">Créer un Troc</h1>
+            <form action="/create" method="post" class="bg-light p-4 rounded shadow">
+
+                <!-- Champs Troqueur et Destinataire -->
+                <div class="form-group">
+                    <label for="id_troqueur">Troqueur ID:</label>
+                    <input type="text" id="id_troqueur" name="id_troqueur" class="form-control" required placeholder="Entrer l'identifiant du troqueur">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_destinataire">Destinataire ID:</label>
+                    <input type="text" id="id_destinataire" name="id_destinataire" class="form-control" required placeholder="Entrer l'identifiant du destinataire">
+                </div>
+
+                <div class="form-group">
+                    <label for="date_fichier">Date du fichier:</label>
+                    <input type="text" id="date_fichier" name="date_fichier" class="form-control" required placeholder="Entrer la date du fichier (jj-mm-aaaa)">
+                </div>
+
+                <!-- Messages -->
+                <h2>Messages</h2>
+                <div class="form-group">
+                    <label for="date_message">Date du message:</label>
+                    <input type="text" id="date_message" name="date_message" class="form-control" required placeholder="Entrer la date du message (jj-mm-aaaa)">
+                </div>
+
+                <div class="form-group">
+                    <label for="statut">Statut du message:</label>
+                    <select id="statut" name="statut" class="form-control" required>
+                        <option value="propose">Proposé</option>
+                    </select>
+                </div>
+
+                <!-- Objets à échanger -->
+                <h3>Objets à échanger</h3>
+                <div id="objets">
+                    <div class="objet mb-4">
+                        <div class="form-group">
+                            <label for="titre">Titre de l'objet:</label>
+                            <input type="text" name="titre" class="form-control" required placeholder="Entrer le titre de l'objet">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description de l'objet:</label>
+                            <input type="text" name="description" class="form-control" required placeholder="Entrer la description de l'objet">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="qualite">Qualité de l'objet (0-5):</label>
+                            <input type="number" name="qualite" class="form-control" min="0" max="5" required placeholder="Entrer la qualité de l'objet">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantite">Quantité:</label>
+                            <input type="number" name="quantite" class="form-control" min="1" required placeholder="Entrer la quantité">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" onclick="ajouterObjet()" class="btn btn-outline-primary mb-4">Ajouter un objet</button>
+
+                <!-- Bouton de soumission -->
+                <button type="submit" class="btn btn-primary btn-block">Générer Troc</button>
+            </form>
         </div>
+    </div>
+</div>
 
-        <button type="button" onclick="ajouterObjet()">Ajouter un objet</button><br><br>
+<!-- Script pour ajouter dynamiquement des objets -->
+<script>
+    function ajouterObjet() {
+        const objetsDiv = document.getElementById('objets');
+        const newObjetDiv = document.createElement('div');
+        newObjetDiv.classList.add('objet', 'mb-4');
 
-        <input type="submit" value="Générer Troc">
-    </form>
-
-    <script>
-        function ajouterObjet() {
-            const objetsDiv = document.getElementById('objets');
-            const newObjetDiv = document.createElement('div');
-            newObjetDiv.classList.add('objet');
-
-            newObjetDiv.innerHTML = `
+        newObjetDiv.innerHTML = `
+            <div class="form-group">
                 <label for="titre">Titre de l'objet:</label>
-                <input type="text" name="titre" required placeholder="Entrer le titre de l'objet">
+                <input type="text" name="titre" class="form-control" required placeholder="Entrer le titre de l'objet">
+            </div>
 
+            <div class="form-group">
                 <label for="description">Description de l'objet:</label>
-                <input type="text" name="description" required placeholder="Entrer la description de l'objet">
+                <input type="text" name="description" class="form-control" required placeholder="Entrer la description de l'objet">
+            </div>
 
+            <div class="form-group">
                 <label for="qualite">Qualité de l'objet (0-5):</label>
-                <input type="number" name="qualite" min="0" max="5" required placeholder="Entrer la qualité de l'objet">
+                <input type="number" name="qualite" class="form-control" min="0" max="5" required placeholder="Entrer la qualité de l'objet">
+            </div>
 
+            <div class="form-group">
                 <label for="quantite">Quantité:</label>
-                <input type="number" name="quantite" min="1" required placeholder="Entrer la quantité">
-            `;
-            objetsDiv.appendChild(newObjetDiv);
-        }
-    </script>
+                <input type="number" name="quantite" class="form-control" min="1" required placeholder="Entrer la quantité">
+            </div>
+        `;
+        objetsDiv.appendChild(newObjetDiv);
+    }
+</script>
+
+<!-- CDN Bootstrap JS, Popper.js, et jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -4,32 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index Troc</title>
+
+    <!-- Lien vers le CDN de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Lien vers votre fichier CSS personnalisé -->
     <link rel="stylesheet" type="text/css" href="./static/css/indextroc.css" />
 </head>
 <body>
-<h1>Les trocs recus</h1>
-    <nav>
-        <a href="/" class="button">Retour à l'Accueil</a>
-        <a href="/create" class="button">Créer un Trocs</a>
-    </nav>
 
+<!-- Header -->
+<header class="bg-primary text-white text-center py-4">
+    <h1>Bienvenue sur le site des trocs</h1>
+    <nav>
+        <a href="#" class="btn btn-light mx-2">Accueil</a>
+        <a href="/trocsent" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+        <a href="/create" class="btn btn-light mx-2">Création de Trocs</a>
+        <a href="/autorisation" class="btn btn-light mx-2">Listes des Demandes d'autorisation</a>
+    </nav>
+</header>
+
+<!-- Navigation -->
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-4">
+        <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
+    </div>
+
+    <h1 class="text-center mb-4">Les trocs reçus</h1>
+
+    <!-- Liste des trocs -->
     <div class="trocs">
         {% for troc in trocs | sort(attribute='date_fichier', reverse=True) %}
-        <div class="troc">
-            <h2>Les informations générales du troc</h2>
-            <h3>Identifiant du troqueur : {{ troc.id_troqueur }}</h3>
-            <h3>Identifiant du destinataire : {{ troc.id_destinataire }}</h3>
-            <h3>Identifiant du fichier : {{ troc.id_fichier }}</h3>
-            <h3>Date du fichier : {{ troc.date_fichier }}</h3>
+        <div class="troc mb-4 p-4 border rounded shadow-sm">
+            <h2 class="text-primary">Informations générales du Troc</h2>
+            <p><strong>Identifiant du troqueur :</strong> {{ troc.id_troqueur }}</p>
+            <p><strong>Identifiant du destinataire :</strong> {{ troc.id_destinataire }}</p>
+            <p><strong>Identifiant du fichier :</strong> {{ troc.id_fichier }}</p>
+            <p><strong>Date du fichier :</strong> {{ troc.date_fichier }}</p>
 
-            <h2>Les messages</h2>
+            <h3 class="text-primary">Messages</h3>
             {% for message in troc.messages | sort(attribute='date_message', reverse=True) %}
-            <div class="message">
-                <h3>Identifiant du message : {{ message.id_message }}</h3>
-                <h3>Date du message : {{ message.date_message }}</h3>
-                <h3>Statut du message : {{ message.statut }}</h3>
-                <h2>Les objets à échanger du message</h2>
-                <table>
+            <div class="message mb-4 p-3 border rounded">
+                <h4>Identifiant du message : {{ message.id_message }}</h4>
+                <p><strong>Date du message :</strong> {{ message.date_message }}</p>
+                <p><strong>Statut du message :</strong> {{ message.statut }}</p>
+
+                <h5 class="text-primary">Les objets à échanger du message</h5>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Titre</th>
@@ -49,22 +70,32 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <p>Acceptez-vous ce troc ?</p>
-                <!--<button onclick="acceptTrade(this.parentElement)">Accepter</button> -->
-                <!--<button onclick="declineTrade(this.parentElement)">Refuser</button> -->
-                <a href="/createdemandeautorisation/id_message={{ message.id_message }}&id_fichier={{ troc.id_fichier }}"><button>Creer une demande d'autorisation</button></a>
 
+                <!-- Boutons d'actions -->
+                <p>Acceptez-vous ce troc ?</p>
+                <a href="/createdemandeautorisation/id_message={{ message.id_message }}&id_fichier={{ troc.id_fichier }}">
+                    <button class="btn btn-primary">Créer une demande d'autorisation</button>
+                </a>
             </div>
             {% endfor %}
         </div>
         {% endfor %}
     </div>
 
-    <h2>La liste des fichiers pas bons</h2>
-    <div class="bad-files">
-        {{ noms_des_fichiers_pas_bons }}
+    <!-- Liste des fichiers pas bons -->
+    <h2 class="text-danger">La liste des fichiers pas bons</h2>
+    <div class="bad-files p-3 border rounded bg-light mb-5">
+        <pre>{{ noms_des_fichiers_pas_bons }}</pre>
     </div>
-    <script src="./static/js/indextroc.js" defer></script>
+</div>
+
+<!-- Script pour les interactions JavaScript -->
+<script src="./static/js/indextroc.js" defer></script>
+
+<!-- CDN Bootstrap JS, Popper.js, et jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

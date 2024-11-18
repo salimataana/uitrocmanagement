@@ -2,36 +2,75 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création Demande d'autorisation</title>
-    <link rel="stylesheet" type="text/css" href="./static/css/createtroc.css" />
 
+    <!-- Lien vers le CDN de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Lien vers votre fichier CSS personnalisé -->
+    <link rel="stylesheet" type="text/css" href="./static/css/createautorisation.css" />
 </head>
 <body>
 
-<a href="/" class="button">Retour à l'Accueil</a>
-<a href="/index" class="button">Listes des Trocs</a>
+<header class="bg-primary text-white text-center py-4">
+    <h1>Bienvenue sur le site des trocs</h1>
+    <nav>
+        <a href="#" class="btn btn-light mx-2">Accueil</a>
+        <a href="/trocreceived" class="btn btn-light mx-2">Listes des Trocs reçus</a>
+        <a href="/trocsent" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+        <a href="/create" class="btn btn-light mx-2">Création de Trocs</a>
+    </nav>
+</header>
 
-    <h1>Créer un demande d'autorisation</h1>
-    <form action="/createdemandeautorisation/id_message={{id_message}}&id_fichier={{id_fichier}}" method="post">
+<!-- Section de contenu principal -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Navigation pour revenir en arrière -->
+            <div class="d-flex justify-content-between mb-4">
+                <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
+            </div>
 
-        <label for="statut_autorisation">Statut du autorisation:</label>
-        <select id="statut_autorisation" name="statut_autorisation" required>
-            <option value="accepte">accepte</option>
-            <option value="annule">demande</option>
-            <option value="refuse">refuse</option>
-        </select>
+            <h1 class="text-center mb-4">Créer une demande d'autorisation</h1>
 
+            <!-- Formulaire de création de demande d'autorisation -->
+            <form action="/createdemandeautorisation/id_message={{id_message}}&id_fichier={{id_fichier}}" method="post" class="bg-light p-4 rounded shadow">
 
-        <label for="mail">Mail :</label>
-        <input type="text" id="mail" name="mail" required placeholder="Veillez entrer votre mail">
+                <!-- Sélection du statut -->
+                <div class="form-group">
+                    <label for="statut_autorisation">Statut de l'autorisation :</label>
+                    <select id="statut_autorisation" name="statut_autorisation" class="form-control" required>
+                        <option value="accepte">Accepte</option>
+                        <option value="demande">Demande</option>
+                        <option value="refuse">Refuse</option>
+                    </select>
+                </div>
 
-           <label for="telephone">Telephone ID:</label>
-        <input type="text" id="telephone" name="telephone" required placeholder="Veillez entrer votre telephone">
+                <!-- Champ Mail -->
+                <div class="form-group">
+                    <label for="mail">Mail :</label>
+                    <input type="email" id="mail" name="mail" class="form-control" required placeholder="Veuillez entrer votre mail">
+                </div>
 
+                <!-- Champ Téléphone -->
+                <div class="form-group">
+                    <label for="telephone">Téléphone :</label>
+                    <input type="text" id="telephone" name="telephone" class="form-control" required placeholder="Veuillez entrer votre téléphone">
+                </div>
 
-        <input type="submit" value="Soumettre la demande d'autorisation ">
-    </form>
+                <!-- Bouton de soumission -->
+                <button type="submit" class="btn btn-primary btn-block">Soumettre la demande d'autorisation</button>
+            </form>
+        </div>
+    </div>
+</div>
 
+<!-- CDN Bootstrap JS, Popper.js, et jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
+

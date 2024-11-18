@@ -4,33 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index Troc</title>
-    <link rel="stylesheet" type="text/css" href="./static/css/indextroc.css" />
+
+    <!-- CDN Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Lien vers votre CSS personnalisé -->
+    <link rel="stylesheet" type="text/css" href="./static/css/indexautorisation.css" />
+    <link rel="stylesheet" type="text/css" href="./static/css/menu.css" />
 </head>
 <body>
-<h1>Liste Autorisation</h1>
-    <nav>
-        <a href="/" class="button">Retour à l'Accueil</a>
-        <a href="/create" class="button">Créer un Trocs</a>
-    </nav>
 
-    <div class="autorization">
+<header class="bg-primary text-white text-center py-4">
+    <h1>Bienvenue sur le site des trocs</h1>
+    <nav>
+        <a href="#" class="btn btn-light mx-2">Accueil</a>
+        <a href="/trocreceived" class="btn btn-light mx-2">Listes des Trocs reçus</a>
+        <a href="/trocsent" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+        <a href="/create" class="btn btn-light mx-2">Création de Trocs</a>
+    </nav>
+</header>
+
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-4">
+        <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
+    </div>
+
+    <h1 class="text-center mb-4">Liste des Autorisations</h1>
+
+    <div class="autorization-list">
         {% for autorization in autorizations %}
-        <div class="autorization">
-            <h2>Les informations générales de l'autorisation</h2>
-            <h3>Identifiant du troqueur : {{ autorization.id_troqueur }}</h3>
-            <h3>Identifiant du destinataire : {{ autorization.id_destinataire }}</h3>
-            <h3>Identifiant du fichier : {{ autorization.id_fichier }}</h3>
-            <h3>Date du fichier : {{ autorization.date_fichier }}</h3>
-            <h3>Demande d'Autorisation Statut: {{ autorization.demande_autorisation.statut_autorisation }}</h3>
-            <h3>Demande d'Autorisation Date: {{ autorization.demande_autorisation.date }}</h3>
-            <h3>Identifiant du Message: {{ autorization.demande_autorisation.id_message }}</h3>
-            <h3>mail: {{ autorization.demande_autorisation.coord.mail }}</h3>
-            <h3> telephone: {{ autorization.demande_autorisation.telephone }}</h3>
+        <div class="autorization card mb-4 p-3 shadow-sm">
+            <h2 class="card-title">Les informations générales de l'autorisation</h2>
+            <div class="card-body">
+                <p><strong>Identifiant du Troqueur:</strong> {{ autorization.id_troqueur }}</p>
+                <p><strong>Identifiant du Destinataire:</strong> {{ autorization.id_destinataire }}</p>
+                <p><strong>Identifiant du Fichier:</strong> {{ autorization.id_fichier }}</p>
+                <p><strong>Date du Fichier:</strong> {{ autorization.date_fichier }}</p>
+
+                <p><strong>Demande d'Autorisation Statut:</strong>
+                    <span class="statut" data-status="{{ autorization.demande_autorisation.statut_autorisation }}">
+                        {{ autorization.demande_autorisation.statut_autorisation }}
+                    </span>
+                </p>
+
+                <p><strong>Demande d'Autorisation Date:</strong> {{ autorization.demande_autorisation.date }}</p>
+                <p><strong>Identifiant du Message:</strong> {{ autorization.demande_autorisation.id_message }}</p>
+                <p><strong>Mail:</strong> {{ autorization.demande_autorisation.coord.mail }}</p>
+                <p><strong>Téléphone:</strong> {{ autorization.demande_autorisation.telephone }}</p>
+            </div>
         </div>
         {% endfor %}
-      </div>
+    </div>
+</div>
 
-    <script src="./static/js/indextroc.js" defer></script>
+<!-- JS Bootstrap et votre fichier JS personnalisé -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="./static/js/indexautorisation.js" defer></script>
 
 </body>
 </html>

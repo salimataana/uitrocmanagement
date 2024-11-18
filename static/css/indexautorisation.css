@@ -1,0 +1,72 @@
+/* Styles de base */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Titre */
+h1 {
+    font-size: 28px;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+/* Nav Buttons */
+.btn {
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+/* Autorisation Container */
+.autorization-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.autorization {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autorization h2 {
+    font-size: 22px;
+    color: #007bff;
+}
+
+/* Card Body */
+.card-body p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Statut d'Autorisation : Couleurs selon le statut */
+.statut {
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.statut[data-status="accepte"] {
+    background-color: #28a745;
+    color: white;
+}
+
+.statut[data-status="demande"] {
+    background-color: #ffc107;
+    color: white;
+}
+
+.statut[data-status="refuse"] {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Styles responsives */
+@media (max-width: 768px) {
+    .autorization-list {
+        grid-template-columns: 1fr;
+    }
+}
