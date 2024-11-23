@@ -5,13 +5,15 @@ from random import randint
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 
+from constant import GROUP_NUMBER
 from data_access import USER_CURRENT
-from data_access.data_access_autorization import DATA_FOLDER_AUTORIZATION, get_all_autorizations
+from data_access.data_access_autorization import DATA_FOLDER_AUTORIZATION, get_all_autorizations, \
+    get_autorization_with_idFichier
 from data_access.data_access_troc import get_all_trocs, get_troc_by_id_fichier, get_all_trocs_sent_by_current_user, \
     get_all_trocs_received_by_current_user
 from models.autorisation import Autorisation
 from models.coordonnees import Coordonnees
-from models.demandeautorisation import DemandeAutorisation
+from models.demandeautorisation import MessageDemandeAutorisation
 from models.message import Message
 from models.objetechanger import ObjetExchange
 from models.troc import Troc
@@ -63,6 +65,32 @@ def index_autorisation():
 
 
 @login_required
+@main.route("/autorisation_envoye")
+def index_autorisation_envoye():
+    autorizations=get_all_autorizations(folder_path="data/demandeauthorizationenvoye")
+    print(autorizations)
+    return render_template("indexautorisationenvoye.html",autorizations=autorizations)
+
+
+
+@main.route("/createdemandeautorizationaccepted/idFichier=<idFichier>", methods=("GET", "POST"))
+def create_demande_autorization_accepted(idFichier):
+    autorization = get_autorization_with_idFichier(idFichier)
+    if request.method=="GET":
+        return render_template("creationdemandeautorizationaccepted.html", autorization=autorization )
+    if request.method=="POST":
+        autorization.messageDemandeAutorisation["statutAutorisation"] = request.form["statut_autorisation"]
+        #autorization.messageDemandeAutorisation = MessageDemandeAutorisation(**autorization.messageDemandeAutorisation)
+
+        if request.form["statut_autorisation"] == "accepte":
+            autorization.save(f"data/demandeautorisationaccepted/{generate_unique_name_file_for_authorization()}")
+            autorizations = get_all_autorizations(folder_path="data/demandeautorisationaccepted/")
+        else:
+            autorization.save(f"data/demandeautorisationrefused/{generate_unique_name_file_for_authorization()}")
+            autorizations = get_all_autorizations(folder_path="data/demandeautorisationrefused")
+        return render_template("indexautorisationaccepted.html", autorizations=autorizations)
+
+@login_required
 @main.route("/create",methods=("GET", "POST"))
 def create_troc():
     if request.method=="GET":
@@ -89,29 +117,32 @@ def create_troc():
         return redirect(url_for('main.index_troc_sent'))
 
 @login_required
-@main.route("/createdemandeautorisation/id_message=<id_message>&id_fichier=<id_fichier>", methods=("GET", "POST"))
-def create_demande_autorisation(id_message, id_fichier):
+@main.route("/createdemandeautorisation/", methods=("GET", "POST"))
+def create_demande_autorisation():
+
     if request.method=="GET":
-        print(f"*******************{id_message}****************")
-        return render_template("createdemandeautorisation.html",id_message=id_message,
-                               id_fichier=id_fichier, email=current_user.email)
+        return render_template("createdemandeautorisation.html",groupe_id=GROUP_NUMBER,
+                        )
+    print("*****************************POST***************************")
     if request.method=="POST":
-        troc = get_troc_by_id_fichier(f"{PREFIX_FOLDER_TROC_SENT}/{id_fichier}")
+        print(request.form)
         coord = Coordonnees(mail=request.form["mail"],
                                                 telephone=request.form["telephone"])
-        demande_authorization = DemandeAutorisation(statut_autorisation=request.form["statut_autorisation"],
+        messageDemandeAutorisation = MessageDemandeAutorisation(
+                                                                        statutAutorisation=request.form["statut_autorisation"],
                                                                         date=get_current_date(),
-                                                                        id_message=id_message,
-                                                                        coord=coord)
-        autorisation = Autorisation(id_troqueur=troc.id_troqueur,
-                                        id_destinataire=current_user.id,
-                                        id_fichier=troc.id_fichier,
-                                        date_fichier=get_current_date(),
-                                        demande_autorisation=demande_authorization)
+                                                                        idMessage=request.form["idMessage"],
+                                                                        coordonnees=coord)
+        autorisation = Autorisation(idTroqueur=request.form["idTroqueur"],
+                                                            idDestinataire=request.form["idDestinataire"],
+                                                            idFichier=request.form["idFichier"],
+                                                            dateFichier=get_current_date(),
+                                                            messageDemandeAutorisation=messageDemandeAutorisation)
         file_name = generate_unique_name_file_for_authorization()
 
-        autorisation.save(f"{PREFIX_FOLDER_AUTH}/{file_name}")
-        return redirect(url_for('main.index_autorisation'))
+        autorisation.save(f"data/demandeauthorizationenvoye/{file_name}")
+        return redirect(url_for('main.index_autorisation_envoye'))
+
 
 
 def generate_unique_name_file_troc():

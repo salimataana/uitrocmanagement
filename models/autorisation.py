@@ -3,20 +3,20 @@ from typing import List
 
 from flask import json
 
-from models.demandeautorisation import DemandeAutorisation
+from models.demandeautorisation import MessageDemandeAutorisation
 
 
 class Autorisation:
-    def __init__(self, id_troqueur: str, id_destinataire: str, id_fichier: str, date_fichier:str, demande_autorisation: DemandeAutorisation, checksum: str=None):
-        self.id_troqueur = id_troqueur
-        self.id_destinataire = id_destinataire
-        self.id_fichier = id_fichier
-        self.date_fichier = date_fichier
-        self.checksum = hashlib.md5(f"{id_fichier}, {id_destinataire},{date_fichier}".encode('utf-8')).hexdigest() if checksum is None else checksum
-        self.demande_autorisation = demande_autorisation
+    def __init__(self, idTroqueur: str, idDestinataire: str, idFichier: str, dateFichier:str, messageDemandeAutorisation: MessageDemandeAutorisation, checksum: str=None):
+        self.idTroqueur = idTroqueur
+        self.idDestinataire = idDestinataire
+        self.idFichier = idFichier
+        self.dateFichier = dateFichier
+        self.checksum = hashlib.md5(f"{idFichier}, {idDestinataire},{dateFichier}".encode('utf-8')).hexdigest() if checksum is None else checksum
+        self.messageDemandeAutorisation = messageDemandeAutorisation
 
     def __repr__(self):
-        return f"Autorisation(id_troqueur={self.id_troqueur}, id_destinataire={self.id_destinataire}, id_fichier={self.id_fichier}, checksum={self.checksum}, demandes_autorisation={self.demande_autorisation})"
+        return f"Autorisation(idTroqueur={self.idTroqueur}, idDestinataire={self.idDestinataire}, idFichier={self.idFichier}, checksum={self.checksum}, messageDemandeAutorisation={self.messageDemandeAutorisation})"
 
     @staticmethod
     def from_json(data_json):
@@ -30,12 +30,14 @@ class Autorisation:
         """
         :return: this function return the object autorisations in json format
         """
+        message = MessageDemandeAutorisation(**self.messageDemandeAutorisation) if isinstance(self.messageDemandeAutorisation, dict) else self.messageDemandeAutorisation
         return {
-            "id_troqueur": self.id_troqueur,
-            "id_destinataire": self.id_destinataire,
-            "id_fichier": self.id_fichier,
-            "date_fichier": self.date_fichier,
-            "demande_autorisation": self.demande_autorisation.to_json(),
+            "idTroqueur": self.idTroqueur,
+            "idDestinataire": self.idDestinataire,
+            "idFichier": self.idFichier,
+            "dateFichier": self.dateFichier,
+            "messageDemandeAutorisation": message.to_json(),
+            #"messageDemandeAutorisation": self.messageDemandeAutorisation,
             "checksum": self.checksum
         }
 

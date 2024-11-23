@@ -3,27 +3,38 @@ from typing import List
 from models.coordonnees import Coordonnees
 
 
-class DemandeAutorisation:
-    def __init__(self, statut_autorisation: str, date: str, id_message: str, coord: Coordonnees):
-        self.statut_autorisation = statut_autorisation
+class MessageDemandeAutorisation:
+    def __init__(self,
+                                date: str,
+                                idMessage: str,
+                                statutAutorisation: str,
+
+                                coordonnees: Coordonnees):
+        self.statutAutorisation = statutAutorisation
         self.date = date
-        self.id_message = id_message
-        self.coord = coord
+        self.idMessage = idMessage
+        self.coordonnees = coordonnees
 
     def __repr__(self):
-            return f"DemandeAutorisation(statut_autorisation={self.statut_autorisation}, date={self.date}, id_message={self.id_message}, coord={self.coord})"
+            return f"MessageDemandeAutorisation(statutAutorisation={self.statutAutorisation}, date={self.date}, idMessage={self.idMessage}, coordonnees={self.coordonnees})"
 
     def __str__(self):
-            return f"DemandeAutorisation(statut_autorisation={self.statut_autorisation}, date={self.date}, id_message={self.id_message}, coord={self.coord})"
+            return f"MessageDemandeAutorisation(statutAutorisation={self.statutAutorisation}, date={self.date}, idMessage={self.idMessage}, coordonnees={self.coordonnees})"
+
+    @staticmethod
+    def from_json(data_json):
+        return MessageDemandeAutorisation(**data_json)
+
 
     def to_json(self):
             """
-            :return: this function return the object demandeautorisation in json format
+            :return: this function return the object MessageDemandeAutorisation in json format
             """
+            coord =Coordonnees(**self.coordonnees) if isinstance(self.coordonnees, dict) else self.coordonnees
             data = {
-                "statut_autorisation": self.statut_autorisation,
+                "idMessage": self.idMessage,
+                "statutAutorisation": self.statutAutorisation,
                 "date": self.date,
-                "id_message": self.id_message,
-                "coord": self.coord.to_json() 
+                "coordonnees": coord.to_json()
             }
             return data

@@ -4,7 +4,7 @@ class Coordonnees:
         self.telephone = telephone
 
     def __repr__(self):
-            return f"Coords(mail={self.mail}, telephone={self.telephone})"
+            return f"Coordonnees(mail={self.mail}, telephone={self.telephone})"
 
     def to_json(self):
         """

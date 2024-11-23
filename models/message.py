@@ -4,27 +4,27 @@ from models.objetechanger import ObjetExchange
 
 
 class Message:
-    def __init__(self, id_message:str, date_message: str, statut: str, objets: List[ObjetExchange]):
-        self.id_message = id_message
-        self.date_message = date_message
+    def __init__(self, idMessage: str, dateMessage: str, statut: str, listeObjet: List[ObjetExchange]):
+        self.idMessage = idMessage
+        self.dateMessage = dateMessage
         self.statut = statut
-        self.objets = objets
+        self.listeObjet = listeObjet
 
 
     def __repr__(self):
-        return f"Message(id_message={self.id_message},date_message={self.date_message}, statut={self.statut}, objets={self.objets})"
+        return f"Message(idMessage={self.idMessage},dateMessage={self.dateMessage}, statut={self.statut}, objets={self.listeObjet})"
 
     def __str__(self):
-        return f"Message(date_message={self.date_message}, statut={self.statut}, objets={self.objets})"
+        return f"Message(dateMessage={self.dateMessage}, statut={self.statut}, objets={self.listeObjet})"
 
     def to_json(self):
         """
         :return: this function return the object message in json format
         """
         data = {
-            "id_message": self.id_message,
-            "date_message": self.date_message,
+            "idMessage": self.idMessage,
+            "dateMessage": self.dateMessage,
             "statut": self.statut,
-            "objets": [objet.to_json() for objet in self.objets]
+            "listeObjet": [objet.to_json() for objet in self.listeObjet]
         }
         return data

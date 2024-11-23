@@ -3,22 +3,24 @@ from typing import List
 from models.message import Message
 import hashlib
 class Troc:
-    def __init__(self, id_troqueur: str,
-                                 id_destinataire: str,
-                                 id_fichier: str,
-                                 date_fichier: str,
+    def __init__(self, idTroqueur: str,
+                                 idDestinataire: str,
+                                 idFichier: str,
+                                 dateFichier: str,
+                                 nombreMessages: int,
                                  messages: List[Message],
                                  checksum: str=None):
-        self.id_troqueur = id_troqueur
-        self.id_destinataire = "" if id_destinataire is None else id_destinataire
-        self.id_fichier = id_fichier
-        self.date_fichier = date_fichier
+        self.idTroqueur = idTroqueur
+        self.idDestinataire = "" if idDestinataire is None else idDestinataire
+        self.idFichier = idFichier
+        self.dateFichier = dateFichier
+        self.nombreMessages = nombreMessages
         self.messages = messages
-        self.checksum =  hashlib.md5(f"{id_fichier}, {id_destinataire},{date_fichier},{messages}".encode('utf-8')).hexdigest() if checksum is None else checksum
+        self.checksum =  hashlib.md5(f"{idFichier}, {idDestinataire},{dateFichier},{messages}".encode('utf-8')).hexdigest() if checksum is None else checksum
 
     def __repr__(self):
-        return (f"Troc(id_troqueur={self.id_troqueur}, id_destinataire={self.id_destinataire}, "
-                f"id_fichier={self.id_fichier}, date_fichier={self.date_fichier}, "
+        return (f"Troc(idTroqueur={self.idTroqueur}, idDestinataire={self.idDestinataire}, "
+                f"idFichier={self.idFichier}, dateFichier={self.dateFichier}, nombreMessages={self.nombreMessages} "
                 f"messages={self.messages}, checksum={self.checksum})")
 
     @staticmethod
@@ -34,10 +36,11 @@ class Troc:
         :return: this function return the object troc in json format
         """
         return {
-            "id_troqueur": self.id_troqueur,
-            "id_destinataire": self.id_destinataire,
-            "id_fichier": self.id_fichier,
-            "date_fichier": self.date_fichier,
+            "idTroqueur": self.idTroqueur,
+            "idDestinataire": self.idDestinataire,
+            "idFichier": self.idFichier,
+            "dateFichier": self.dateFichier,
+            "nombreMessages": self.nombreMessages,
             "messages": [message.to_json() for message in self.messages],
             "checksum": self.checksum
         }

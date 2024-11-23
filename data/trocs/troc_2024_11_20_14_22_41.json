@@ -1,0 +1,22 @@
+{
+  "id_troqueur": "3",
+  "id_destinataire": "",
+  "id_fichier": "troc_2024_11_20_14_22_41.json",
+  "date_fichier": "2024-11-20",
+  "messages": [
+    {
+      "id_message": "6689012",
+      "date_message": "2024-11-20",
+      "statut": "propose",
+      "objets": [
+        {
+          "titre": "moto",
+          "description": "velo d'ocasion",
+          "qualite": 4,
+          "quantite": 2
+        }
+      ]
+    }
+  ],
+  "checksum": "d8480c1933baef3d5aa859395b750854"
+}

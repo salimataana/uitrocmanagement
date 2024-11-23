@@ -1,21 +1,25 @@
 {
   "type": "object",
   "properties": {
-    "id_troqueur": {
+    "idTroqueur": {
       "type": "string",
       "description": "Identifiant de l'expéditeur"
     },
-    "id_destinataire": {
+    "idDestinataire": {
       "type": "string",
       "description": "Identifiant du destinataire "
     },
-    "id_fichier": {
+    "idFichier": {
       "type": "string",
       "description": "Identifiant du fichier "
     },
-    "date_fichier": {
+    "dateFichier": {
       "type": "string",
       "description": "Date au format jj-mm-yyyy."
+    },
+    "nombreMessages": {
+      "type": "integer",
+      "description": "Nombre de message"
     },
     "messages": {
       "type": "array",
@@ -38,7 +42,7 @@
             ],
             "description": "Statut de la proposition."
           },
-          "objets": {
+          "listeObjets": {
             "type": "array",
             "minItems": 1,
             "items": {
@@ -77,10 +81,10 @@
     }
   },
   "required": [
-    "id_troqueur",
-    "id_destinataire",
-    "id_fichier",
-    "date_fichier",
+    "idTroqueur",
+    "idDestinataire",
+    "idFichier",
+    "dateFichier",
     "messages",
     "checksum"
   ]

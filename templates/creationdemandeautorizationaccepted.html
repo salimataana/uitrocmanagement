@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Création Demande d'autorisation</title>
+    <title>Création Autorization accepted</title>
 
     <!-- Lien vers le CDN de Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Lien vers votre fichier CSS personnalisé -->
-    <link rel="stylesheet" type="text/css" href="./static/css/createautorisation.css" />
+    <link rel="stylesheet" type="text/css" href="./static/css/createtroc.css" />
+    <link rel="stylesheet" type="text/css" href="./static/css/menu.css" />
 </head>
 <body>
 
+<!-- Header -->
 <header class="bg-primary text-white text-center py-4">
     <h1>Bienvenue sur le site des trocs</h1>
     <nav>
@@ -55,62 +57,68 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-12">
-            <!-- Navigation pour revenir en arrière -->
+            <!-- Navigation -->
             <div class="d-flex justify-content-between mb-4">
                 <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
             </div>
 
-            <h1 class="text-center mb-4">Créer une demande d'autorisation</h1>
+            <!-- Formulaire de création de Troc -->
+            <h1 class="text-center mb-4">Créer un Acceptation de demande d'autorization</h1>
+            <form action="/createdemandeautorizationaccepted/idFichier={{ autorization.idFichier }}" method="post" class="bg-light p-4 rounded shadow">
 
-            <!-- Formulaire de création de demande d'autorisation -->
-            <form action="{{ url_for('main.create_demande_autorisation')}}" method="post" class="bg-light p-4 rounded shadow">
 
                   <div class="form-group">
-                    <label for="idTroqueur">Troqueur ID:</label>
-                    <input type="text" id="idTroqueur" name="idTroqueur" class="form-control" value="{{ groupe_id }}">
-                  </div>
-
-                <div class="form-group">
-                    <label for="idDestinataire">Destinataire ID:</label>
-                    <input type="text" id="idDestinataire" name="idDestinataire" class="form-control" >
-                  </div>
-
-                <div class="form-group">
-                    <label for="idFichier">Fichier ID:</label>
-                    <input type="text" id="idFichier" name="idFichier" class="form-control" >
-                  </div>
-
-
-                <!-- Sélection du statut -->
-                <div class="form-group">
                     <label for="statut_autorisation">Statut de l'autorisation :</label>
                     <select id="statut_autorisation" name="statut_autorisation" class="form-control" required>
-                        <option value="demande">Demande</option>
+                        <option value="accepte">Accepte</option>
+                        <option value="refuse">Refuse</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="idMessage">id Message :</label>
-                    <input type="text" id="idMessage" name="idMessage" class="form-control">
-                </div>
-                <!-- Champ Mail -->
-                <div class="form-group">
-                    <label for="mail">Mail :</label>
-                    <input type="email" id="mail" name="mail" class="form-control">
-                </div>
 
-                <!-- Champ Téléphone -->
-                <div class="form-group">
-                    <label for="telephone">Téléphone :</label>
-                    <input type="text" id="telephone" name="telephone" class="form-control" required placeholder="Veuillez entrer votre téléphone">
-                </div>
+
+
+
+
 
                 <!-- Bouton de soumission -->
-                <button type="submit" class="btn btn-primary btn-block">Create d'une demande d'authorization</button>
+                <button type="submit" class="btn btn-primary btn-block">Générer Reponse d'Autorizations</button>
             </form>
         </div>
     </div>
 </div>
+
+<!-- Script pour ajouter dynamiquement des objets -->
+<script>
+    function ajouterObjet() {
+        const objetsDiv = document.getElementById('objets');
+        const newObjetDiv = document.createElement('div');
+        newObjetDiv.classList.add('objet', 'mb-4');
+
+        newObjetDiv.innerHTML = `
+            <div class="form-group">
+                <label for="titre">Titre de l'objet:</label>
+                <input type="text" name="titre" class="form-control" required placeholder="Entrer le titre de l'objet">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description de l'objet:</label>
+                <input type="text" name="description" class="form-control" required placeholder="Entrer la description de l'objet">
+            </div>
+
+            <div class="form-group">
+                <label for="qualite">Qualité de l'objet (0-5):</label>
+                <input type="number" name="qualite" class="form-control" min="0" max="5" required placeholder="Entrer la qualité de l'objet">
+            </div>
+
+            <div class="form-group">
+                <label for="quantite">Quantité:</label>
+                <input type="number" name="quantite" class="form-control" min="1" required placeholder="Entrer la quantité">
+            </div>
+        `;
+        objetsDiv.appendChild(newObjetDiv);
+    }
+</script>
 
 <!-- CDN Bootstrap JS, Popper.js, et jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -119,4 +127,3 @@
 
 </body>
 </html>
-
