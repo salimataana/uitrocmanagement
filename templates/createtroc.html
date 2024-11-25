@@ -24,6 +24,12 @@
 
         {% if current_user.is_authenticated %}
 
+        <a href="{{ url_for('main.index_autorisation') }}" class="btn btn-light mx-2">Listes des Demandes
+            d'autorisation recus</a>
+
+         <a href="{{ url_for('main.index_autorisation_envoye') }}" class="btn btn-light mx-2">Listes des Demandes
+            d'autorisation envoyés</a>
+
         <a href="{{ url_for('main.index_troc_received') }}" class="btn btn-light mx-2">Listes des Trocs reçus</a>
 
 
@@ -31,12 +37,6 @@
 
 
         <a href="{{ url_for('main.create_troc') }}" class="btn btn-light mx-2">Création de Trocs</a>
-
-
-        <a href="{{ url_for('main.index_autorisation') }}" class="btn btn-light mx-2">Listes des Demandes
-            d'autorisation</a>
-
-
 
         {% endif %}
         {% if not current_user.is_authenticated %}
@@ -73,10 +73,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="id_destinataire">Destinataire ID:</label>
-                    <input type="text" id="id_destinataire" name="id_destinataire" class="form-control" required placeholder="Entrer l'identifiant du destinataire">
-                </div>
-    -
+                 <label for="id_destinataire">Destinataire :</label>
+                  <select id="id_destinataire" name="id_destinataire" class="form-control" required>
+                   <option value="" disabled selected>Sélectionnez un destinataire</option>
+                       {% for destinataire in destinataires %}
+                   <option value="{{ destinataire.id }}">{{ destinataire.name }}</option>
+                      {% endfor %}
+                </select>
+               </div>
+
                 <div class="form-group">
                     <label for="date_fichier">Date du fichier:</label>
                     <input type="text" id="date_fichier" name="date_fichier" class="form-control" required placeholder="Entrer la date du fichier (jj-mm-aaaa)" readonly value ={{current_date}}>

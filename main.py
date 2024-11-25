@@ -90,10 +90,25 @@ def create_demande_autorization_accepted(idFichier):
             autorizations = get_all_autorizations(folder_path="data/demandeautorisationrefused")
         return render_template("indexautorisationaccepted.html", autorizations=autorizations)
 
+
+def get_destinataires_acceptes():
+    folder_path = "data/demandeautorisationaccepted/"
+    autorisations = get_all_autorizations(folder_path=folder_path)
+    destinataires = [
+        {"id": autorisation.idDestinataire}
+        for autorisation in autorisations
+    ]
+    return destinataires
+
+
+
+
+
 @login_required
 @main.route("/create",methods=("GET", "POST"))
 def create_troc():
     if request.method=="GET":
+        destinataires_acceptes = get_destinataires_acceptes()
         return render_template("createtroc.html", user_id=current_user.id, current_date=get_current_date())
     if request.method=="POST":
         # get the name of file to create
@@ -109,7 +124,7 @@ def create_troc():
                                                 objets=[objects])
 
         troc = Troc(id_troqueur=request.form["id_troqueur"],
-                             id_destinataire=None, # NOT CONNU#request.form["id_destinataire"],
+                             id_destinataire=request.form["id_destinataire"],
                              id_fichier=file_name,
                              date_fichier=request.form["date_fichier"],
                              messages=[messages])
@@ -161,3 +176,4 @@ def generate_unique_name_file_for_authorization():
 def get_current_date():
     ts = time.time()
     return datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
+
