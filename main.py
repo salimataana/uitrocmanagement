@@ -1,5 +1,6 @@
 import datetime
 import os
+import shutil
 import time
 from random import randint
 
@@ -23,6 +24,7 @@ PREFIX_FOLDER_TROC_SENT="data/trocsent"
 PREFIX_FOLDER_TROC_RECEIVED="data/trocrecus"
 PREFIX_FOLDER_TROC_ACCEPTED="data/trocaccepted"
 PREFIX_FOLDER_TROC_REFUSED="data/trocrefused"
+PREFIX_FOLDER_TROC_ARCHIVED="data/trocarchived"
 
 
 PREFIX_FOLDER_AUTH="data/autorisations"
@@ -74,23 +76,29 @@ def index_autorisation():
 #@login_required
 @main.route("/createacceptationatroc/<idFichier>")
 def acceptation_troc(idFichier):
-    troc = get_troc_by_id_fichier(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    troc,file_name = get_troc_by_id_fichier(folder=PREFIX_FOLDER_TROC_RECEIVED, id_fichier=idFichier)
+    print(troc)
     for message in troc.messages:
         message["statut"]="accepte"
-    troc.save(f"{PREFIX_FOLDER_TROC_ACCEPTED}/{idFichier}")
-    os.remove(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    troc.save(f"{PREFIX_FOLDER_TROC_ACCEPTED}/{generate_unique_name_file_troc()}")
+
+    from pathlib import Path
+
+    Path(f"{PREFIX_FOLDER_TROC_RECEIVED}/{file_name}").rename(f"{PREFIX_FOLDER_TROC_ARCHIVED}/{file_name}")
     return redirect(url_for('main.index_troc_received'))
 
 
 #@login_required
 @main.route("/createrefusatroc/<idFichier>")
 def refus_troc(idFichier):
-    troc = get_troc_by_id_fichier(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    troc,file_name = get_troc_by_id_fichier(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
     for message in troc.messages:
         message["statut"]="refuse"
-    troc.save(f"{PREFIX_FOLDER_TROC_REFUSED}/{idFichier}")
-    import os
-    os.remove(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    troc.save(f"{PREFIX_FOLDER_TROC_REFUSED}/{generate_unique_name_file_troc()}")
+    from pathlib import Path
+
+    Path(f"{PREFIX_FOLDER_TROC_RECEIVED}/{file_name}").rename(f"{PREFIX_FOLDER_TROC_ARCHIVED}/{file_name}")
+
     return redirect(url_for('main.index_troc_received'))
 
 

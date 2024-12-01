@@ -1,8 +1,7 @@
 import json
 import os
 
-from flask_login import current_user
-from pyexpat.errors import messages
+from jsonschema.validators import extend
 
 from constant import GROUP_NUMBER
 from data_access.data_access_autorization import get_all_autorizations
@@ -10,14 +9,36 @@ from data_access.validation_helper import validate_json
 from models.troc import Troc
 from models.user import TrocModel
 from database import db
-
-def get_troc_by_id_fichier(id_fichier) -> Troc:
+def get_troc_by_id_fichier(folder , id_fichier) -> Troc:
     """
         :param path: on verifie d'abord si le fichier est un bon json avant de le charger dans troc
         :return:
-        """
-    print("get_troc_by_id_fichier",id_fichier)
-    is_valid = validate_json(id_fichier, "schema/schema_troc.json")
+    """
+
+    for file_name in os.listdir(folder):
+        if file_name.endswith(".json"):
+            # print path name of selected files
+            try:
+                troc = get_troc_by_file_name(os.path.join(folder, file_name))
+                if troc.idFichier==id_fichier:
+                    return troc, file_name
+            except Exception as e:
+                    print(f"erreur dans le fichier {e}")
+
+
+    return None, None
+
+
+def get_troc_by_file_name(id_fichier) -> Troc:
+    """
+        :param path: on verifie d'abord si le fichier est un bon json avant de le charger dans troc
+        :return:
+    """
+    print("get_troc_by_file_name",id_fichier)
+    try:
+        is_valid = validate_json(id_fichier, "schema/schema_troc.json")
+    except Exception as e:
+        print(f"erreur dans le fichier {e}")
     file = open(id_fichier, encoding="utf-8")
     json_data = json.load(file)
     return Troc.from_json(json_data)
@@ -81,12 +102,7 @@ def validate_troc_file(id_fichier):
             count_fails += 1
             message = message + f"{id_fichier} est rejété car le destinataire {json_data["idTroqueur"]} n'est pas autorisé \n"
 
-        pass
-
-
-        count_fails += 1
-        message = message + f"{id_fichier} est rejété car le troqueur n'est pas le bon \n"
-
+       
     ## reste a faire : autorisation non present et fichier deja traité
     return (message, count_fails)
 
@@ -103,7 +119,7 @@ def get_all_trocs_well_formatted(folder_path, well_files=[]):
             # print path name of selected files
             try:
                 #retenir quelque part le nom du fichier
-                list_trocs.append(get_troc_by_id_fichier(os.path.join(file)))
+                list_trocs.append(get_troc_by_file_name(os.path.join(file)))
             except Exception as e:
                 print(f"erreur dans le fichier {e}")
     return list_trocs

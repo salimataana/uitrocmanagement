@@ -62,6 +62,4 @@
       },
       "required": ["idTroqueur", "idDestinataire", "idFichier", "dateFichier", "checksum", "MessageDemandeAutorisation"]
     }
-  },
-  "required": ["autorisation"]
-}
+
