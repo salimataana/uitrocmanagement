@@ -1,4 +1,5 @@
 import datetime
+import os
 import time
 from random import randint
 
@@ -18,8 +19,12 @@ from models.message import Message
 from models.objetechanger import ObjetExchange
 from models.troc import Troc
 
-PREFIX_FOLDER_TROC_SENT="data/trocs"
-PREFIX_FOLDER_TROC_RECEIVED="data/trocs"
+PREFIX_FOLDER_TROC_SENT="data/trocsent"
+PREFIX_FOLDER_TROC_RECEIVED="data/trocrecus"
+PREFIX_FOLDER_TROC_ACCEPTED="data/trocaccepted"
+PREFIX_FOLDER_TROC_REFUSED="data/trocrefused"
+
+
 PREFIX_FOLDER_AUTH="data/autorisations"
 
 main = Blueprint('main', __name__)
@@ -43,20 +48,21 @@ def home():
     return render_template("home.html")
 
 
-@login_required
+#@login_required
 @main.route("/trocsent")
 def index_troc_sent():
-    trocs,noms_des_fichiers_pas_bons=get_all_trocs_sent_by_current_user(PREFIX_FOLDER_TROC_SENT, id_troqueur=current_user.id)
+    trocs,noms_des_fichiers_pas_bons=get_all_trocs(PREFIX_FOLDER_TROC_SENT)
     return render_template("indextrocsent.html",trocs=trocs,noms_des_fichiers_pas_bons=noms_des_fichiers_pas_bons)
 
-@login_required
+#@login_required
 @main.route("/trocreceived")
 def index_troc_received():
-    trocs,noms_des_fichiers_pas_bons=get_all_trocs_received_by_current_user(PREFIX_FOLDER_TROC_RECEIVED, id_troqueur=current_user.id)
+    trocs, noms_des_fichiers_pas_bons = get_all_trocs(PREFIX_FOLDER_TROC_RECEIVED)
+
     print(f"********************************{len(trocs)}*****************")
     return render_template("indextrocreceived.html",trocs=trocs,noms_des_fichiers_pas_bons=noms_des_fichiers_pas_bons)
 
-@login_required
+#@login_required
 @main.route("/autorisation")
 def index_autorisation():
     autorizations=get_all_autorizations(folder_path=DATA_FOLDER_AUTORIZATION)
@@ -64,7 +70,32 @@ def index_autorisation():
     return render_template("indexautorisation.html",autorizations=autorizations)
 
 
-@login_required
+
+#@login_required
+@main.route("/createacceptationatroc/<idFichier>")
+def acceptation_troc(idFichier):
+    troc = get_troc_by_id_fichier(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    for message in troc.messages:
+        message["statut"]="accepte"
+    troc.save(f"{PREFIX_FOLDER_TROC_ACCEPTED}/{idFichier}")
+    os.remove(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    return redirect(url_for('main.index_troc_received'))
+
+
+#@login_required
+@main.route("/createrefusatroc/<idFichier>")
+def refus_troc(idFichier):
+    troc = get_troc_by_id_fichier(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    for message in troc.messages:
+        message["statut"]="refuse"
+    troc.save(f"{PREFIX_FOLDER_TROC_REFUSED}/{idFichier}")
+    import os
+    os.remove(f"{PREFIX_FOLDER_TROC_RECEIVED}/{idFichier}")
+    return redirect(url_for('main.index_troc_received'))
+
+
+
+#@login_required
 @main.route("/autorisation_envoye")
 def index_autorisation_envoye():
     autorizations=get_all_autorizations(folder_path="data/demandeauthorizationenvoye")
@@ -75,7 +106,7 @@ def index_autorisation_envoye():
 
 @main.route("/createdemandeautorizationaccepted/idFichier=<idFichier>", methods=("GET", "POST"))
 def create_demande_autorization_accepted(idFichier):
-    autorization = get_autorization_with_idFichier(idFichier)
+    autorization,file = get_autorization_with_idFichier(idFichier)
     if request.method=="GET":
         return render_template("creationdemandeautorizationaccepted.html", autorization=autorization )
     if request.method=="POST":
@@ -84,54 +115,97 @@ def create_demande_autorization_accepted(idFichier):
 
         if request.form["statut_autorisation"] == "accepte":
             autorization.save(f"data/demandeautorisationaccepted/{generate_unique_name_file_for_authorization()}")
-            autorizations = get_all_autorizations(folder_path="data/demandeautorisationaccepted/")
+            os.remove(f"data/demandeautorizationrecu/{file}")
         else:
             autorization.save(f"data/demandeautorisationrefused/{generate_unique_name_file_for_authorization()}")
-            autorizations = get_all_autorizations(folder_path="data/demandeautorisationrefused")
-        return render_template("indexautorisationaccepted.html", autorizations=autorizations)
+            os.remove(f"data/demandeautorizationrecu/{file}")
+        return redirect(url_for('main.list_authorization_accepted'))
+
+@main.route("/demandeautorisationaccepted")
+def list_authorization_accepted():
+    folder_path = "data/demandeautorisationaccepted/"
+    autorisations_accepted = get_all_autorizations(folder_path=folder_path)
+
+    folder_path = "data/demandeautorisationrefused/"
+    autorisations_refused = get_all_autorizations(folder_path=folder_path)
+    return render_template("indexautorisationaccepted.html", autorizations=autorisations_accepted+autorisations_refused)
+
 
 
 def get_destinataires_acceptes():
+    all = []
     folder_path = "data/demandeautorisationaccepted/"
     autorisations = get_all_autorizations(folder_path=folder_path)
-    destinataires = [
-        {"id": autorisation.idDestinataire}
+    print(autorisations)
+    troqueurs_id = [
+        autorisation.idDestinataire
         for autorisation in autorisations
     ]
-    return destinataires
+    destinataires_ids = [
+        autorisation.idTroqueur
+        for autorisation in autorisations
+    ]
+    all.extend(destinataires_ids)
+    all.extend(troqueurs_id)
+
+    # remove the current group
+    return [id for id in all if id != GROUP_NUMBER ]
 
 
 
 
 
-@login_required
+#@login_required
 @main.route("/create",methods=("GET", "POST"))
 def create_troc():
     if request.method=="GET":
         destinataires_acceptes = get_destinataires_acceptes()
-        return render_template("createtroc.html", user_id=current_user.id, current_date=get_current_date())
+        return render_template("createtroc.html",
+                                                    user_id=GROUP_NUMBER,
+                                                    current_date=get_current_date(),
+                                                    destinataires=destinataires_acceptes
+                                )
     if request.method=="POST":
         # get the name of file to create
         file_name = generate_unique_name_file_troc()
+        listeObjet = []
         objects = ObjetExchange(titre=request.form[f"titre"],
                                                         description=request.form[f"description"],
                                                         qualite=int(request.form[f"qualite"]),
                                                         quantite=int(request.form[f"quantite"])
                                                         )
-        messages = Message(id_message=str(randint(0, 10000000)),
-                                                date_message=request.form["date_message"],
-                                                 statut= request.form["statut"],
-                                                objets=[objects])
+        listeObjet.append(objects)
+        print("****************************{}".format(request.form))
 
-        troc = Troc(id_troqueur=request.form["id_troqueur"],
-                             id_destinataire=request.form["id_destinataire"],
-                             id_fichier=file_name,
-                             date_fichier=request.form["date_fichier"],
-                             messages=[messages])
+        count = 2
+        while f"titre_{count}" in request.form:
+            objects = ObjetExchange(titre=request.form[f"titre_{count}"],
+                                                            description=request.form[f"description_{count}"],
+                                                            qualite=int(request.form[f"qualite_{count}"]),
+                                                            quantite=int(request.form[f"quantite_{count}"])
+                                                            )
+            listeObjet.append(objects)
+            count += 1
+
+
+
+        messages = Message(idMessage=str(randint(0, 10000000)),
+                                                dateMessage=request.form["date_message"],
+                                                 statut= request.form["statut"],
+                                                listeObjet=listeObjet)
+        listMessages = [messages]
+        troc = Troc(idTroqueur=request.form["id_troqueur"],
+                             idDestinataire=request.form["id_destinataire"],
+                             idFichier=file_name,
+                             dateFichier=request.form["date_fichier"],
+                             nombreMessages=len(listMessages) if isinstance(listMessages, list) else 0,
+                             messages=listMessages
+
+                    )
         troc.save(f"{PREFIX_FOLDER_TROC_SENT}/{file_name}")
         return redirect(url_for('main.index_troc_sent'))
 
-@login_required
+#@login_required
 @main.route("/createdemandeautorisation/", methods=("GET", "POST"))
 def create_demande_autorisation():
 

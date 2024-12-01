@@ -1,7 +1,67 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
 
-{% block content %}
+    <!-- CDN Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Lien vers votre CSS personnalisé -->
+    <link rel="stylesheet" type="text/css" href="./static/css/home.css">
+</head>
+<body>
+
+<!-- En-tête de la page -->
+<header class="bg-primary text-white text-center py-4">
+    <h1>Bienvenue sur le site des trocs</h1>
+    <nav>
+
+
+        <a href="{{ url_for('main.home') }}" class="btn btn-light mx-2">Home</a>
+
+
+
+        <a href="{{ url_for('main.index_autorisation') }}" class="btn btn-light mx-2">Listes des Demandes
+            d'autorisation recus</a>
+
+         <a href="{{ url_for('main.index_autorisation_envoye') }}" class="btn btn-light mx-2">Listes des Demandes
+            d'autorisation envoyés</a>
+
+        <a href="{{ url_for('main.index_troc_received') }}" class="btn btn-light mx-2">Listes des Trocs reçus</a>
+
+
+        <a href="{{ url_for('main.index_troc_sent') }}" class="btn btn-light mx-2">Listes des Trocs envoyés</a>
+
+
+        <a href="{{ url_for('main.create_troc') }}" class="btn btn-light mx-2">Création de Trocs</a>
+
+        <a href="{{ url_for('main.create_demande_autorisation') }}" class="btn btn-light mx-2">Création de démande d'autorisation</a>
+
+
+
+        <a href="{{ url_for('auth.login') }}" class="btn btn-light mx-2">Login</a>
+
+
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-light mx-2">Sign Up</a>
+
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-light mx-2">Logout</a>
+    </nav>
+</header>
+
 <div class="container text-center my-5">
-    <img src="{{url_for('static', filename='images_trocs/home.png')}}" alt="Image principale" class="img-fluid mb-4" />
+    <img src="{{url_for('static', filename='images_trocs/home.png')}}" alt="Image principale" class="img-fluid mb-4"/>
 </div>
-{% endblock %}
+<!-- Pied de page -->
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 JSON. Tous droits réservés.</p>
+</footer>
+
+<!-- Scripts JS (Bootstrap, jQuery, Popper.js) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

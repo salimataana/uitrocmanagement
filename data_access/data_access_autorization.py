@@ -5,7 +5,7 @@ from data_access.validation_helper import validate_json
 from models.autorisation import Autorisation
 from models.troc import Troc
 
-DATA_FOLDER_AUTORIZATION = "data/demandeautorization"
+DATA_FOLDER_AUTORIZATION = "data/demandeautorizationrecu"
 
 def get_autorization_by_id_fichier(id_fichier) -> Autorisation:
     """
@@ -19,7 +19,6 @@ def get_autorization_by_id_fichier(id_fichier) -> Autorisation:
 
 
 def get_all_autorizations(folder_path=DATA_FOLDER_AUTORIZATION):
-    print(os.listdir(folder_path))
     autorizations = []
     for file in os.listdir(folder_path):
         # check the files which are end with specific extension
@@ -53,14 +52,14 @@ def filter_autorization_by_id_troqueur_id_destinateur_id_fichier(idTroqueur, idD
 
 def get_autorization_with_idFichier(idFichier):
     autorizations = []
-    path = "data/demandeautorization/"
+    path = "data/demandeautorizationrecu/"
     for file in os.listdir(path):
         if file.endswith(".json"):
             try:
-                file = open(path + file, encoding="utf-8")
-                json_data = json.load(file)
+                data = open(path + file, encoding="utf-8")
+                json_data = json.load(data)
                 if json_data["idFichier"] == idFichier:
-                    return Autorisation.from_json(json_data)
+                    return Autorisation.from_json(json_data), file
             except Exception as e:
                 print(f"erreur dans le fichier {e}")
 

@@ -1,0 +1,29 @@
+{
+  "id____________Troqueur": "g5.1",
+  "idDestinataire": "g2.1",
+  "idFichier": "troc_2024_12_01_14_58_36.json",
+  "dateFichier": "2024-12-01",
+  "nombreMessages": 1,
+  "messages": [
+    {
+      "idMessage": "4145322",
+      "dateMessage": "2024-12-01",
+      "statut": "propose",
+      "listeObjets": [
+        {
+          "titre": "Cafe",
+          "description": "A boir",
+          "qualite": 4,
+          "quantite": 14
+        },
+        {
+          "titre": "Cafe12",
+          "description": "TEST ",
+          "qualite": 4,
+          "quantite": 14
+        }
+      ]
+    }
+  ],
+  "checksum": "d09a030ea275aee0059c544689398464"
+}

@@ -1,5 +1,7 @@
 import json
 from typing import List
+
+
 from models.message import Message
 import hashlib
 class Troc:
@@ -41,7 +43,7 @@ class Troc:
             "idFichier": self.idFichier,
             "dateFichier": self.dateFichier,
             "nombreMessages": self.nombreMessages,
-            "messages": [message.to_json() for message in self.messages],
+            "messages": [message.to_json() if not isinstance(message,dict) else message for message in self.messages],
             "checksum": self.checksum
         }
 

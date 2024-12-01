@@ -77,9 +77,8 @@
                 <div class="form-group">
                  <label for="id_destinataire">Destinataire :</label>
                   <select id="id_destinataire" name="id_destinataire" class="form-control" required>
-                   <option value="" disabled selected>Sélectionnez un destinataire</option>
                        {% for destinataire in destinataires %}
-                   <option value="{{ destinataire.id }}">{{ destinataire.name }}</option>
+                                <option value="{{ destinataire }}">{{ destinataire }}</option>
                       {% endfor %}
                 </select>
                </div>
@@ -141,29 +140,31 @@
 <!-- Script pour ajouter dynamiquement des objets -->
 <script>
     function ajouterObjet() {
+        count = document.querySelectorAll('.objet').length;
+        count = count + 1;
         const objetsDiv = document.getElementById('objets');
         const newObjetDiv = document.createElement('div');
         newObjetDiv.classList.add('objet', 'mb-4');
 
         newObjetDiv.innerHTML = `
             <div class="form-group">
-                <label for="titre">Titre de l'objet:</label>
-                <input type="text" name="titre" class="form-control" required placeholder="Entrer le titre de l'objet">
+                <label for="titre_${count}">Titre de l'objet:</label>
+                <input type="text" name="titre_${count}" class="form-control" required placeholder="Entrer le titre de l'objet">
             </div>
 
             <div class="form-group">
-                <label for="description">Description de l'objet:</label>
-                <input type="text" name="description" class="form-control" required placeholder="Entrer la description de l'objet">
+                <label for="description_${count}">Description de l'objet:</label>
+                <input type="text" name="description_${count}" class="form-control" required placeholder="Entrer la description de l'objet">
             </div>
 
             <div class="form-group">
-                <label for="qualite">Qualité de l'objet (0-5):</label>
-                <input type="number" name="qualite" class="form-control" min="0" max="5" required placeholder="Entrer la qualité de l'objet">
+                <label for="qualite_${count}">Qualité de l'objet (0-5):</label>
+                <input type="number" name="qualite_${count}" class="form-control" min="0" max="5" required placeholder="Entrer la qualité de l'objet">
             </div>
 
             <div class="form-group">
                 <label for="quantite">Quantité:</label>
-                <input type="number" name="quantite" class="form-control" min="1" required placeholder="Entrer la quantité">
+                <input type="number" name="quantite_${count}" class="form-control" min="1" required placeholder="Entrer la quantité">
             </div>
         `;
         objetsDiv.appendChild(newObjetDiv);

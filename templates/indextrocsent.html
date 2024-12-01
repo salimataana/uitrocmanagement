@@ -68,16 +68,16 @@
         {% for troc in trocs | sort(attribute='date_fichier', reverse=True) %}
         <div class="troc mb-4 p-4 border rounded shadow-sm">
             <h2 class="text-primary">Informations générales du troc</h2>
-            <p><strong>Identifiant du troqueur :</strong> {{ troc.id_troqueur }}</p>
-            <p><strong>Identifiant du destinataire :</strong> {{ troc.id_destinataire }}</p>
-            <p><strong>Identifiant du fichier :</strong> {{ troc.id_fichier }}</p>
-            <p><strong>Date du fichier :</strong> {{ troc.date_fichier }}</p>
+            <p><strong>Identifiant du troqueur :</strong> {{ troc.idTroqueur }}</p>
+            <p><strong>Identifiant du destinataire :</strong> {{ troc.idDestinataire }}</p>
+            <p><strong>Identifiant du fichier :</strong> {{ troc.idFichier }}</p>
+            <p><strong>Date du fichier :</strong> {{ troc.dateFichier }}</p>
 
             <h3 class="text-primary">Les messages</h3>
             {% for message in troc.messages | sort(attribute='date_message', reverse=True) %}
             <div class="message mb-4 p-3 border rounded">
-                <h4>Identifiant du message : {{ message.id_message }}</h4>
-                <p><strong>Date du message :</strong> {{ message.date_message }}</p>
+                <h4>Identifiant du message : {{ message.idMessage }}</h4>
+                <p><strong>Date du message :</strong> {{ message.dateMessage }}</p>
                 <p><strong>Statut du message :</strong> {{ message.statut }}</p>
 
                 <h5 class="text-primary">Les objets à échanger du message</h5>
@@ -91,7 +91,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for objet in message.objets %}
+                        {% for objet in message.listeObjet %}
                         <tr>
                             <td>{{ objet.titre }}</td>
                             <td>{{ objet.description }}</td>
@@ -109,9 +109,32 @@
 
     <!-- Liste des fichiers incorrects -->
     <h2 class="text-danger mt-5">La liste des fichiers incorrects</h2>
+
     <div class="bad-files p-3 border rounded bg-light mb-5">
-        <pre>{{ noms_des_fichiers_pas_bons }}</pre>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom du fichier</th>
+                <th>Nombre de check pas validé</th>
+                <th>Cause de l'echec de chargement</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for objet in noms_des_fichiers_pas_bons %}
+                <tr>
+                    <td><pre>{{ objet.idFichier }}</pre></td>
+                    <td><pre>{{ objet.nombreCheckpasValide }}</pre></td>
+                    <td><pre>{{ objet.cause }}</pre></td>
+
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
 </div>
 
 <!-- Script pour les interactions JavaScript -->
