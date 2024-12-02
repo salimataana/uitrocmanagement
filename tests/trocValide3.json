@@ -1,1 +1,34 @@
-{"idTroqueur":"g4.4","idDestinataire":"g3.8","idFichier":"g5.7","dateFichier":"21-11-2024","messages":[{"dateMessage":"21-11-2024","statut":"propose","listeObjet":[{"titre":"Chat","description":"Un chat","qualite":5,"quantite":1},{"titre":"Chien","description":"Un chien","qualite":4,"quantite":3},{"titre":"Dragon","description":"Un gros lézard","qualite":2,"quantite":19}]}],"checksum":"abc123xyz456"}
+{
+  "idTroqueur": "g4.4",
+  "idDestinataire": "g3.8",
+  "idFichier": "g5.7",
+  "dateFichier": "21-11-2024",
+  "nombreMessages": 1,
+  "messages": [
+    {
+      "dateMessage": "21-11-2024",
+      "statut": "propose",
+      "listeObjet": [
+        {
+          "titre": "Chat",
+          "description": "Un chat",
+          "qualite": 5,
+          "quantite": 1
+        },
+        {
+          "titre": "Chien",
+          "description": "Un chien",
+          "qualite": 4,
+          "quantite": 3
+        },
+        {
+          "titre": "Dragon",
+          "description": "Un gros lézard",
+          "qualite": 2,
+          "quantite": 19
+        }
+      ]
+    }
+  ],
+  "checksum": "abc123xyz456"
+}

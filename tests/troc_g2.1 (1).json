@@ -1,0 +1,27 @@
+{
+  "idTroqueur": "g2.2",
+  "idDestinataire": "g1",
+  "idFichier": "g2.1",
+  "dateFichier": "2024-10-23",
+  "checksum": "eyJFbnRldGUiOnsiZXhwZWRpdGV1ciI6ImcyIiwiZGF0ZUZpY2hpZXIiOiIyMDI0LTEwLTIzIn0sIlByb3Bvc2l0aW9uIjp7ImlkZW50aWZpYW50VHJvYyI6ImcyLjEiLCJ0cm9xdWV1cklkIjoiZzIuMiIsImRlc3RpbmF0YWlyZSI6ImcxIiwibGlzdGVPYmpldHMiOlt7InRpdHJlIjoib2JqMSIsInF1YWxpdGUiOjIsInF1YW50aXRlIjoyLCJkZXNjcmlwdGlvbiI6InRlc3QifSx7InRpdHJlIjoidGVzdDEiLCJxdWFsaXRlIjoyLCJxdWFudGl0ZSI6MTMsImRlc2NyaXB0aW9uIjoicG91In1dLCJzdGF0dXQiOiJyZWZ1c+kiLCJkYXRlIjoiMjAyNC0xMC0yMyIsImNoZWNrQ29kZSI6IiJ9LCJDb29yZG9ubmVlcyI6eyJtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJ0ZWxlcGhvbmUiOiIxMjM0NTY3ODkifSwiTWVzc2FnZURlbWFuZGVBdXRvcmlzYXRpb24iOnsidHJvcXVldXJJZCI6ImcyLjEuMSIsImNvb3Jkb25uZWVzIjoiY29vciIsInN0YXR1dEF1dG9yaXNhdGlvbiI6InJlZnVz6SIsImRlc3RpbmF0YWlyZSI6ImcxIiwiZGF0ZSI6IjIwMjQtMTAtMjMiLCJpZE1lc3NhZ2UiOiJ0ZXN0In19",
+  "messages": [
+    {
+      "dateMessage": "2024-10-23",
+      "statut": "refusé",
+      "listeObjet": [
+        {
+          "titre": "obj1",
+          "description": "test",
+          "qualite": 2,
+          "quantite": 2
+        },
+        {
+          "titre": "test1",
+          "description": "pou",
+          "qualite": 2,
+          "quantite": 13
+        }
+      ]
+    }
+  ]
+}

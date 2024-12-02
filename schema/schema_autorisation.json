@@ -21,7 +21,7 @@
           "type": "string",
           "description": "String permettant la gestion des erreurs de transfert de données."
         },
-        "MessageDemandeAutorisation": {
+        "messageDemandeAutorisation": {
           "type": "object",
           "properties": {
             "coordonnees": {
@@ -35,6 +35,10 @@
                 "telephone": {
                   "type": "string",
                   "description": "Numéro de téléphone."
+                },
+                "nomAuteur": {
+                  "type": "string",
+                  "description": "Nom de l'auteur du message."
                 }
               },
               "required": ["mail", "telephone"]
@@ -60,6 +64,6 @@
           "required": ["coordonnees", "statutAutorisation", "destinataire", "date", "idMessage"]
         }
       },
-      "required": ["idTroqueur", "idDestinataire", "idFichier", "dateFichier", "checksum", "MessageDemandeAutorisation"]
+      "required": ["idTroqueur", "idDestinataire", "idFichier", "dateFichier", "checksum", "messageDemandeAutorisation"]
     }
 

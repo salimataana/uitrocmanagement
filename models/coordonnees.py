@@ -1,10 +1,11 @@
 class Coordonnees:
-    def __init__(self, mail: str, telephone: str):
+    def __init__(self, mail: str, telephone: str, nomAuteur: str):
         self.mail = mail
         self.telephone = telephone
+        self.nomAuteur = nomAuteur
 
     def __repr__(self):
-            return f"Coordonnees(mail={self.mail}, telephone={self.telephone})"
+            return f"Coordonnees(mail={self.mail}, telephone={self.telephone}, nomAuteur={self.nomAuteur})"
 
     def to_json(self):
         """
@@ -13,5 +14,6 @@ class Coordonnees:
         data = {
             "mail": self.mail,
             "telephone": self.telephone,
+            "nomAuteur": self.nomAuteur,
         }
         return data

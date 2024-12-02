@@ -224,7 +224,8 @@ def create_demande_autorisation():
     if request.method=="POST":
         print(request.form)
         coord = Coordonnees(mail=request.form["mail"],
-                                                telephone=request.form["telephone"])
+                                                telephone=request.form["telephone"],
+                                                nomAuteur=request.form["nomAuteur"])
         messageDemandeAutorisation = MessageDemandeAutorisation(
                                                                         statutAutorisation=request.form["statut_autorisation"],
                                                                         date=get_current_date(),

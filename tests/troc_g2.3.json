@@ -1,0 +1,21 @@
+{
+  "idTroqueur": "g2.2",
+  "idDestinataire": "g2.2",
+  "idFichier": "g2.2",
+  "dateFichier": "2024-10-22T22:00:00.000Z",
+  "checksum": "eyJFbnRldGUiOnsiZXhwZWRpdGV1ciI6ImcyLjIiLCJkYXRlRmljaGllciI6IjIwMjQtMTAtMjJUMjI6MDA6MDAuMDAwWiJ9LCJQcm9wb3NpdGlvbiI6eyJpZGVudGlmaWFudFRyb2MiOiJnMi4yIiwidHJvcXVldXJJZCI6ImcyLjIiLCJkZXN0aW5hdGFpcmUiOiJnMi4yIiwibGlzdGVPYmpldHMiOlt7InRpdHJlIjoiT2JqZXQgMSIsInF1YWxpdGUiOjQsInF1YW50aXRlIjoxLCJkZXNjcmlwdGlvbiI6ImJvbiBvYmpldCJ9XSwic3RhdHV0IjoicHJvcG9z6SIsImRhdGUiOiIyMDI0LTEwLTIyVDIyOjAwOjAwLjAwMFoiLCJjaGVja0NvZGUiOiIifSwiQ29vcmRvbm5lZXMiOnsibWFpbCI6InRlc3RAZ21haWwuY29tIiwidGVsZXBob25lIjoiMTIzNDU2Nzg5In0sIk1lc3NhZ2VEZW1hbmRlQXV0b3Jpc2F0aW9uIjp7InRyb3F1ZXVySWQiOiJnMi4yIiwiY29vcmRvbm5lZXMiOiJnMi4yIiwic3RhdHV0QXV0b3Jpc2F0aW9uIjoiZGVtYW5k6SIsImRlc3RpbmF0YWlyZSI6ImcxIiwiZGF0ZSI6IjIwMjQtMTAtMjJUMjI6MDA6MDAuMDAwWiIsImlkTWVzc2FnZSI6InRlc3QifX0=",
+  "messages": [
+    {
+      "dateMessage": "2024-10-22T22:00:00.000Z",
+      "statut": "proposé",
+      "listeObjet": [
+        {
+          "titre": "Objet 1",
+          "description": "bon objet",
+          "qualite": 4,
+          "quantite": 1
+        }
+      ]
+    }
+  ]
+}

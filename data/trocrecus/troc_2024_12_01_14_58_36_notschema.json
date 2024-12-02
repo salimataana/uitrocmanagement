@@ -1,12 +1,11 @@
 {
-  "idTroqueur": "g5.1",
-  "idDestinataire": "g2.1",
+  "idTroqueur": "g2.1",
+  "idDestinataire": "g5.1",
   "idFichier": "troc_2024_12_01_14_58_36.json",
   "dateFichier": "2024-12-01",
   "nombreMessages": 1,
   "messages": [
     {
-      "idMessage": "4145322",
       "dateMessage": "2024-12-01",
       "statut": "propose",
       "listeObjets": [

@@ -8,7 +8,6 @@ class MessageDemandeAutorisation:
                                 date: str,
                                 idMessage: str,
                                 statutAutorisation: str,
-
                                 coordonnees: Coordonnees):
         self.statutAutorisation = statutAutorisation
         self.date = date
