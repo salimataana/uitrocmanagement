@@ -16,10 +16,11 @@
 
 <header class="bg-primary text-white text-center py-4">
     <h1>Bienvenue sur le site des trocs</h1>
-    <nav>
+  <nav>
 
 
         <a href="{{ url_for('main.home') }}" class="btn btn-light mx-2">Home</a>
+
 
 
         <a href="{{ url_for('main.index_autorisation') }}" class="btn btn-light mx-2">Listes des Demandes
@@ -36,16 +37,11 @@
 
         <a href="{{ url_for('main.create_troc') }}" class="btn btn-light mx-2">Création de Trocs</a>
 
-       <a href="{{ url_for('main.create_demande_autorisation') }}" class="btn btn-light mx-2">Création de démande d'autorisation</a>
+        <a href="{{ url_for('main.create_demande_autorisation') }}" class="btn btn-light mx-2">Création de démande d'autorisation</a>
 
 
+        <a href="{{ url_for('main.list_authorization_accepted') }}" class="btn btn-light mx-2">List des autorisations valides</a>
 
-        <a href="{{ url_for('auth.login') }}" class="btn btn-light mx-2">Login</a>
-
-
-        <a href="{{ url_for('auth.signup') }}" class="btn btn-light mx-2">Sign Up</a>
-
-        <a href="{{ url_for('auth.logout') }}" class="btn btn-light mx-2">Logout</a>
     </nav>
 </header>
 
