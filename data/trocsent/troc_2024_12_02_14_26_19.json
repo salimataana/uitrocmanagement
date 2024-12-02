@@ -1,0 +1,29 @@
+{
+  "idTroqueur": "g5.1",
+  "idDestinataire": "g4.1",
+  "idFichier": "troc_2024_12_02_14_26_19.json",
+  "dateFichier": "2024-12-02",
+  "nombreMessages": 1,
+  "messages": [
+    {
+      "idMessage": "9294168",
+      "dateMessage": "2024-12-02",
+      "statut": "propose",
+      "listeObjet": [
+        {
+          "titre": "velo",
+          "description": "chaise d'ocasion",
+          "qualite": 2,
+          "quantite": 3
+        },
+        {
+          "titre": "tttttt",
+          "description": "yyyyyy",
+          "qualite": 4,
+          "quantite": 3
+        }
+      ]
+    }
+  ],
+  "checksum": "a0ea7b0cb8d251aca17d018dbe6c2c32"
+}
