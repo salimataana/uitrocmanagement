@@ -1,19 +1,18 @@
 {
-  "idTroqueur": "g4.1",
+  "idTroqueur": "g4.3",
   "idDestinataire": "g5.1",
   "idFichier": "g5.7",
   "dateFichier": "21-11-2024",
-  "nombreMessages": 1,
   "messages": [
     {
       "dateMessage": "21-11-2024",
       "statut": "propose",
       "listeObjet": [
         {
-          "titre": "Jouet",
-          "description": "Un jouet",
-          "qualite": 5,
-          "quantite": 2
+          "titre": "Brique",
+          "description": "Une brique trés lourde",
+          "qualite": 3,
+          "quantite": 176
         }
       ]
     }

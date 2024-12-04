@@ -51,7 +51,7 @@
         <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
     </div>
 
-    <h1 class="text-center mb-4">Liste des Autorisations</h1>
+    <h1 class="text-center mb-4">Liste des Autorisations Recus</h1>
 
     <div class="autorization-list">
         {% for autorization in autorizations %}
@@ -84,6 +84,33 @@
         </div>
         {% endfor %}
     </div>
+
+    <h2 class="text-danger mt-5">La liste des fichiers incorrects</h2>
+
+    <div class="bad-files p-3 border rounded bg-light mb-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom du fichier</th>
+                <th>Nombre de check pas validé</th>
+                <th>Cause de l'echec de chargement</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for objet in validations %}
+                <tr>
+                    <td><pre>{{ objet.idFichier }}</pre></td>
+                    <td><pre>{{ objet.nombreCheckpasValide }}</pre></td>
+                    <td><pre>{{ objet.cause }}</pre></td>
+
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 </div>
 
 <!-- JS Bootstrap et votre fichier JS personnalisé -->

@@ -1,6 +1,7 @@
 import json
 import os
 
+from constant import GROUP_NUMBER
 from data_access.validation_helper import validate_json
 from models.autorisation import Autorisation
 from models.troc import Troc
@@ -51,30 +52,58 @@ def get_autorization_with_idFichier(idFichier):
             except Exception as e:
                 print(f"Erreur dans le fichier {e}")
 
-def apply_control(file_name):
-    # Vérification de la taille du fichier
-    file_stats = os.stat(file_name)
-    size_file_kb = file_stats.st_size / 1024
-    if size_file_kb > 2:
-        print(f"{file_name} est rejeté car sa taille est de {size_file_kb:.2f} Ko > 2 Ko")
-        return
 
-    # Ouverture et chargement du fichier JSON
-    with open(file_name, encoding="utf-8") as file:
-        json_data = file.read()
+def validate_autorization_file(id_fichier):
+    """
+        :param path: on verifie d'abord si le fichier est un bon json avant de le charger dans troc
+        :return:
+        """
+    # recuperation des personne autorisé ou groupe // grace au dossier demandeautorizationaccepted
 
-    # Vérification du nombre de caractères
-    if len(json_data) > 1000:
-        print(f"{file_name} est rejeté car il contient plus de 1000 caractères")
-        return
+    count_fails = 0
+    message = ""
+    file_stats = os.stat(id_fichier)
+    size_file_bytes = file_stats.st_size / 1000
 
-    # Validation du schéma JSON
-    validate_json(file_path=file_name, validation_schema="")
-    print("Schéma validé")
+    print("validate_troc_file", id_fichier)
+    print("La taille du fichier ", id_fichier, " est de ", size_file_bytes)
 
-    troc = Troc.from_json(json.loads(json_data))
-    nbr_message = len(troc.messages)
+    # verifie de la taille
+    if size_file_bytes > 2:
+        count_fails += 1
+        message = f"{id_fichier} est rejété car sa taille est de {size_file_bytes} > 2 \n"
 
-    # Vérification du nombre de messages
-    if nbr_message != troc.nombre_messages:
-        print("Fichier non valide : nombre de messages différent")
+    # verifie du schema
+    try:
+        is_valid = validate_json(id_fichier, "schema/schema_autorisation.json")
+        file = open(id_fichier, encoding="utf-8")
+        json_data = json.load(file)
+    except Exception as e:
+        count_fails += 1
+        message = message + f"{id_fichier} est rejété car le fichier n'est pas un bon json \n"
+        return (message, count_fails)
+
+    # verification du checksum : nombre de messages
+
+    # compter nombre de caractere
+    with open(id_fichier, 'r') as file:
+        text = file.read().strip().split()
+        len_chars = sum(len(word) for word in text)
+
+    if len_chars > 1000:
+        count_fails += 1
+        message = message + f"{id_fichier} est rejété car le nombre de caractere est superieur à 1000 \n"
+
+
+    ## reste a faire : autorisation non present et fichier deja traité
+    return (message, count_fails)
+
+
+def check_all_file(folder):
+    check = []
+    for file in os.listdir(folder):
+        file_path = os.path.join(folder, file)
+        if validate_autorization_file(file_path)[1] >0:
+            check.append({"idFichier": file, "cause":validate_autorization_file(file_path)[0], "nombreCheckpasValide": validate_autorization_file(file_path)[1]  })
+
+    return check

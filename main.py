@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 from constant import GROUP_NUMBER
 from data_access import USER_CURRENT
 from data_access.data_access_autorization import DATA_FOLDER_AUTORIZATION, get_all_autorizations, \
-    get_autorization_with_idFichier
+    get_autorization_with_idFichier, check_all_file
 from data_access.data_access_troc import get_all_trocs, get_troc_by_id_fichier, get_all_trocs_sent_by_current_user, \
     get_all_trocs_received_by_current_user
 from models.autorisation import Autorisation
@@ -67,9 +67,12 @@ def index_troc_received():
 #@login_required
 @main.route("/autorisation")
 def index_autorisation():
+    validations =  check_all_file(DATA_FOLDER_AUTORIZATION)
+
     autorizations=get_all_autorizations(folder_path=DATA_FOLDER_AUTORIZATION)
+
     print(autorizations)
-    return render_template("indexautorisation.html",autorizations=autorizations)
+    return render_template("indexautorisation.html",autorizations=autorizations, validations=validations)
 
 
 
@@ -84,7 +87,7 @@ def acceptation_troc(idFichier):
 
     from pathlib import Path
 
-    Path(f"{PREFIX_FOLDER_TROC_RECEIVED}/{file_name}").rename(f"{PREFIX_FOLDER_TROC_ARCHIVED}/{file_name}")
+    Path(f"{PREFIX_FOLDER_TROC_RECEIVED}/{file_name}").rename(f"{PREFIX_FOLDER_TROC_ARCHIVED}/{get_current_timestamp()}{file_name}")
     return redirect(url_for('main.index_troc_received'))
 
 
@@ -97,7 +100,7 @@ def refus_troc(idFichier):
     troc.save(f"{PREFIX_FOLDER_TROC_REFUSED}/{generate_unique_name_file_troc()}")
     from pathlib import Path
 
-    Path(f"{PREFIX_FOLDER_TROC_RECEIVED}/{file_name}").rename(f"{PREFIX_FOLDER_TROC_ARCHIVED}/{file_name}")
+    Path(f"{PREFIX_FOLDER_TROC_RECEIVED}/{file_name}").rename(f"{PREFIX_FOLDER_TROC_ARCHIVED}/{get_current_timestamp()}_{file_name}")
 
     return redirect(url_for('main.index_troc_received'))
 
@@ -106,9 +109,10 @@ def refus_troc(idFichier):
 #@login_required
 @main.route("/autorisation_envoye")
 def index_autorisation_envoye():
+    validations =  check_all_file("data/demandeauthorizationenvoye")
     autorizations=get_all_autorizations(folder_path="data/demandeauthorizationenvoye")
     print(autorizations)
-    return render_template("indexautorisationenvoye.html",autorizations=autorizations)
+    return render_template("indexautorisationenvoye.html",autorizations=autorizations,validations=validations )
 
 
 
@@ -133,10 +137,11 @@ def create_demande_autorization_accepted(idFichier):
 def list_authorization_accepted():
     folder_path = "data/demandeautorisationaccepted/"
     autorisations_accepted = get_all_autorizations(folder_path=folder_path)
+    validations =  check_all_file("data/demandeautorisationaccepted")
 
     folder_path = "data/demandeautorisationrefused/"
     autorisations_refused = get_all_autorizations(folder_path=folder_path)
-    return render_template("indexautorisationaccepted.html", autorizations=autorisations_accepted+autorisations_refused)
+    return render_template("indexautorisationaccepted.html", autorizations=autorisations_accepted+autorisations_refused, validations=validations)
 
 
 
@@ -155,7 +160,8 @@ def get_destinataires_acceptes():
     ]
     all.extend(destinataires_ids)
     all.extend(troqueurs_id)
-
+    all = set(all)
+    all = list(all)
     # remove the current group
     return [id for id in all if id != GROUP_NUMBER ]
 
@@ -206,7 +212,6 @@ def create_troc():
                              idDestinataire=request.form["id_destinataire"],
                              idFichier=file_name,
                              dateFichier=request.form["date_fichier"],
-                             nombreMessages=len(listMessages) if isinstance(listMessages, list) else 0,
                              messages=listMessages
 
                     )
@@ -259,4 +264,8 @@ def generate_unique_name_file_for_authorization():
 def get_current_date():
     ts = time.time()
     return datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
+
+def get_current_timestamp():
+    ts = time.time()
+    return datetime.datetime.fromtimestamp(ts).strftime('%Y_%m_%d_%H_%M_%S')
 

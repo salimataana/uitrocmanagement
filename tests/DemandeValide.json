@@ -4,7 +4,7 @@
   "idFichier": "g5.7",
   "dateFichier": "21-11-2024",
   "checksum": "abc123xyz456",
-  "MessageDemandeAutorisation": {
+  "messageDemandeAutorisation": {
     "date": "21-11-2024",
     "idMessage": "Unique1",
     "statutAutorisation": "demande",

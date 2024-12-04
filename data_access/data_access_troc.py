@@ -74,14 +74,11 @@ def validate_troc_file(id_fichier):
         json_data = json.load(file)
     except Exception as e:
         count_fails += 1
-        message = message + f"{id_fichier} est rejété car le fichier n'est pas un bon json \n"
+        message = message + f"{id_fichier} est rejété car le fichier n'est pas un bon json  \n"
         return (message, count_fails)
 
     # verification du checksum : nombre de messages
 
-    if json_data["nombreMessages"] != len(json_data["messages"]):
-        count_fails += 1
-        message = message + f"{id_fichier} est rejété car le nombre de messages est different de la liste des messages \n"
 
     # compter nombre de caractere
     with open(id_fichier, 'r') as file:
@@ -102,7 +99,10 @@ def validate_troc_file(id_fichier):
             count_fails += 1
             message = message + f"{id_fichier} est rejété car le destinataire {json_data["idTroqueur"]} n'est pas autorisé \n"
 
-       
+    if json_data["idDestinataire"] != GROUP_NUMBER and json_data["idTroqueur"]  != GROUP_NUMBER :
+            count_fails += 1
+            message = message + f"{id_fichier} est rejété car le groupe ne figure dans le destinataire ni le troqueur :  {json_data["idTroqueur"]} || {json_data["idDestinataire"]} \n"
+
     ## reste a faire : autorisation non present et fichier deja traité
     return (message, count_fails)
 
@@ -157,28 +157,3 @@ def get_all_trocs_received_by_current_user(folder_path, id_troqueur):
     print(malformatted_files)
     return [item for item in well_formated_files if str(item.id_troqueur)!=str(id_troqueur) ], malformatted_files
 
-
-def deja_traite(file_name):
-    # check if file is already treated
-    new_user = TrocModel(id_fichier=file_name)
-    db.session.add(new_user)
-    db.session.commit()
-
-def apply_control(file_name):
-    # check file size
-    file_stats = os.stat(file_name)
-    size_file_bytes = file_stats.st_size / 1000
-    if size_file_bytes > 2:
-        print(f"{file_name} est rejété car sa taille est de {size_file_bytes} > 2")
-    # validate_schema
-    validate_json(file_path=file_name, validation_schema="")
-    print(" Schema validé")
-    file = open(file_name, encoding="utf-8")
-    json_data = json.load(file)
-
-    troc = Troc.from_json(json_data)
-
-    nbr_message = len(troc.messages)
-    # check nombre de messages
-    if nbr_message != troc.nombre_messages:
-        print("Fichier non valide est rejeté car nombre message different")

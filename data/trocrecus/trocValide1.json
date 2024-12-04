@@ -1,13 +1,12 @@
 {
-  "idTroqueur": "g4.1",
+  "idTroqueur": "g4.2",
   "idDestinataire": "g5.1",
   "idFichier": "g5.7",
   "dateFichier": "21-11-2024",
-  "nombreMessages": 1,
   "messages": [
     {
       "dateMessage": "21-11-2024",
-      "statut": "accepte",
+      "statut": "propose",
       "listeObjet": [
         {
           "titre": "Jouet",

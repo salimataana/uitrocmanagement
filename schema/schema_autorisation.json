@@ -41,16 +41,12 @@
                   "description": "Nom de l'auteur du message."
                 }
               },
-              "required": ["mail", "telephone"]
+              "required": ["mail", "telephone","nomAuteur"]
             },
             "statutAutorisation": {
               "type": "string",
-              "enum": ["accepte", "refuse"],
+              "enum": ["accepte", "refuse", "demande"],
               "description": "Statut de la demande d'autorisation."
-            },
-            "destinataire": {
-              "type": "string",
-              "description": "Identifiant du destinataire de la demande."
             },
             "date": {
               "type": "string",
@@ -61,7 +57,7 @@
               "description": "Identifiant du message."
             }
           },
-          "required": ["coordonnees", "statutAutorisation", "destinataire", "date", "idMessage"]
+          "required": ["coordonnees", "statutAutorisation",  "date", "idMessage"]
         }
       },
       "required": ["idTroqueur", "idDestinataire", "idFichier", "dateFichier", "checksum", "messageDemandeAutorisation"]
