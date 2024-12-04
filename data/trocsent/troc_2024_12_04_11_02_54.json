@@ -1,0 +1,22 @@
+{
+  "idTroqueur": "g5.1",
+  "idDestinataire": "g4.1",
+  "idFichier": "troc_2024_12_04_11_02_54.json",
+  "dateFichier": "2024-12-04",
+  "messages": [
+    {
+      "idMessage": "1803917",
+      "dateMessage": "2024-12-04",
+      "statut": "propose",
+      "listeObjet": [
+        {
+          "titre": "velo",
+          "description": "chaise d'ocasion",
+          "qualite": 2,
+          "quantite": 3
+        }
+      ]
+    }
+  ],
+  "checksum": "efd9acc2588af1e490fea9a5be4e7a29"
+}
